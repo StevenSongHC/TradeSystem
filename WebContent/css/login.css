@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+body {
+	margin: 0;
+	text-align: center;
+}
+.errorMessage {
+	background-color: red;
+}
+.errorLabel {
+	color: red;
+}

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd
+	    http://www.springframework.org/schema/tx 
+	    http://www.springframework.org/schema/tx/spring-tx.xsd 
+	    http://www.springframework.org/schema/aop 
+	    http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <!-- DataSource -->  
+    <bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		
+		<!-- Database connection settings -->
+		<property name="driverClass">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>	
+		<property name="jdbcUrl">
+			<value>jdbc:mysql://localhost:3306/ts?characterEncoding=utf-8</value>
+		</property>			
+		<property name="user">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>123456</value>
+		</property>
+		
+		<!-- c3p0 Config -->
+		<property name="initialPoolSize" value="5" />
+		<property name="minPoolSize" value="1" />
+		<property name="maxPoolSize" value="80" />
+        <property name="acquireIncrement" value="5" />
+		<property name="acquireRetryAttempts" value="30" />
+		<property name="acquireRetryDelay" value="1000" /> 
+		<property name="idleConnectionTestPeriod" value="3000" />
+		<property name="checkoutTimeout" value="3000" />
+		<property name="maxStatements" value="6000" />
+	</bean>
+	
+    <!-- SessionFactory -->  
+    <bean id="sessionFactory"  
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		
+		<!-- Hibernate properties -->
+		<property name="hibernateProperties">
+		    <props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+				<prop key="hbm2ddl.auto">update</prop>
+				<prop key="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</prop>
+		    </props>
+		</property>
+		
+		<!-- Mapping Resources -->
+		<property name="mappingResources">
+			<list>
+				<value>com/ts/entity/User.hbm.xml</value>
+				<value>com/ts/entity/Publisher.hbm.xml</value>
+				<value>com/ts/entity/Message.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+  
+    <!-- TransactionManager -->  
+    <bean id="transactionManager"  
+        class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+    </bean>
+  
+    <!-- Spring Advice -->  
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">  
+        <tx:attributes>  
+            <!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到-->  
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="count*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="list*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="*" read-only="true" />
+            <tx:method name="save*" propagation="REQUIRED" />  
+            <tx:method name="add*" propagation="REQUIRED" />  
+            <tx:method name="create*" propagation="REQUIRED" />  
+            <tx:method name="insert*" propagation="REQUIRED" />  
+            <tx:method name="update*" propagation="REQUIRED" />  
+            <tx:method name="merge*" propagation="REQUIRED" />  
+            <tx:method name="del*" propagation="REQUIRED" />  
+            <tx:method name="remove*" propagation="REQUIRED" />  
+            <tx:method name="put*" propagation="REQUIRED" />  
+            <tx:method name="use*" propagation="REQUIRED"/>
+        </tx:attributes>  
+    </tx:advice>  
+  
+    <!-- Spring Aop Config -->  
+    <aop:config>  
+        <aop:pointcut id="pointcut"  
+            expression="  
+                execution(* com.ts.service.impl.*Impl.*(..))" />  
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />  
+    </aop:config>  
+    
+    <!-- DAO -->
+    <bean id="userDao" class="com.ts.dao.impl.UserDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+    <bean id="publisherDao" class="com.ts.dao.impl.PublisherDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+    <bean id="messageDao" class="com.ts.dao.impl.MessageDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+    
+    <!-- Service -->
+    <bean id="userService" class="com.ts.service.impl.UserServiceImpl">
+        <property name="userDao">
+            <ref bean="userDao"/>
+        </property>
+    </bean>
+    <bean id="publisherService" class="com.ts.service.impl.PublisherServiceImpl">
+        <property name="publisherDao">
+            <ref bean="publisherDao"/>
+        </property>
+    </bean>
+    <bean id="messageService" class="com.ts.service.impl.MessageServiceImpl">
+        <property name="messageDao">
+            <ref bean="messageDao"/>
+        </property>
+        <property name="publisherDao">
+            <ref bean="publisherDao"/>
+        </property>
+    </bean>
+    
+    <!-- Action -->
+    <bean id="registerAction" scope="prototype" class="com.ts.action.user.RegisterAction">
+        <property name="uService" ref="userService"/>
+    </bean>
+    <bean id="loginAction" scope="prototype" class="com.ts.action.user.LoginAction">
+        <property name="uService" ref="userService"/>
+        <property name="pService" ref="publisherService"/>
+    </bean>
+    <bean id="logoutAction" scope="prototype" class="com.ts.action.user.LogoutAction" />
+    <bean id="homepageAction" scope="prototype" class="com.ts.action.user.HomePageAction">
+        <property name="uService" ref="userService"/>
+    </bean>
+    <bean id="becomePublisherAction" scope="prototype" class="com.ts.action.user.BecomePublisherAction">
+        <property name="uService" ref="userService"/>
+        <property name="pService" ref="publisherService"/>
+        <property name="mService" ref="messageService"/>
+    </bean>
+	<bean id="getAllDataAction" scope="prototype" class="com.ts.action.admin.GetAllDataAction">
+        <property name="uService" ref="userService"/>
+    </bean>
+    <bean id="checkNotificationAction" scope="prototype" class="com.ts.action.user.GetNotificationAmountAction">
+        <property name="uService" ref="userService"/>
+        <property name="mService" ref="messageService"/>
+    </bean>
+    <bean id="viewMessageListAction" scope="prototype" class="com.ts.action.user.GetMessageListAction">
+        <property name="uService" ref="userService"/>
+        <property name="mService" ref="messageService"/>
+    </bean>
+    <bean id="upgradePublisherAction" scope="prototype" class="com.ts.action.admin.UpgradePublisherAction">
+        <property name="pService" ref="publisherService"/>
+        <property name="mService" ref="messageService"/>
+    </bean>
+    <bean id="muteMessageAction" scope="prototype" class="com.ts.action.user.MuteMessageAction">
+    	<property name="uService" ref="userService"/>
+        <property name="mService" ref="messageService"/>
+    </bean>
+</beans>

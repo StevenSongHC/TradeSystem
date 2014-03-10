@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ts.entity.User" table="user" catalog="ts">
+        <id name="id" type="integer">
+            <column name="uid" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="string">
+            <column name="u_name" length="30" not-null="true" />
+        </property>
+        <property name="account" type="string">
+            <column name="u_account" length="30" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="u_password" length="30" not-null="true" />
+        </property>
+        <property name="portrait" type="string">
+            <column name="u_portrait" length="50" />
+        </property>
+        <property name="summary" type="text">
+            <column name="u_summary" />
+        </property>
+        <property name="isSuspend" 		column="u_isSuspend" 		type="org.hibernate.type.NumericBooleanType" />
+        <property name="isDelete" 		column="u_isDelete" 		type="org.hibernate.type.NumericBooleanType" />
+        <property name="isRestricted" 	column="u_isRestricted" 	type="org.hibernate.type.NumericBooleanType" />
+        <property name="isPublisher" 	column="u_isPublisher" 		type="org.hibernate.type.NumericBooleanType" />
+    </class>
+    
+</hibernate-mapping>

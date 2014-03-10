@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+        "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+        
+<urlrewrite>
+
+    <rule>
+        <from>/join</from>
+        <to>/register.jsp</to>
+    </rule>
+    <rule>
+        <from>/u/([0-9]+)</from>
+        <to>/homepage?account=$1</to>
+    </rule>
+    <rule>
+        <from>/become_publisher/([a-z]+)</from>
+        <to>/becomePublisher?act=$1</to>
+    </rule>
+    <rule>
+        <from>/message_list</from>
+        <to>/viewMessageList</to>
+    </rule>
+    
+    <rule>
+    	<from>/products/([0-9]+)/([0-9]+).html</from>
+    	<to>/products/index.jsp?product_category=$1&amp;id=$2</to>
+	</rule>
+
+    <!--
+
+     EXAMPLES
+
+     Redirect one url
+        <rule>
+            <from>/some/old/page.html</from>
+            <to type="redirect">/very/new/page.html</to>
+        </rule>
+
+    Redirect a directory
+        <rule>
+            <from>/some/olddir/(.*)</from>
+            <to type="redirect">/very/newdir/$1</to>
+        </rule>
+
+    Clean a url
+        <rule>
+            <from>/products/([0-9]+)</from>
+            <to>/products/index.jsp?product_id=$1</to>
+        </rule>
+    eg, /products/1234 will be passed on to /products/index.jsp?product_id=1234 without the user noticing.
+
+    -->
+
+</urlrewrite>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC     
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"     
+    "http://struts.apache.org/dtds/struts-2.3.dtd">    
+<struts>  
+	<package name="struts2" extends="struts-default">
+		<action name="register" class="registerAction">
+			<result name="input">/register.jsp</result>
+            <result name="success" type="redirect">homepage</result>
+        </action>
+         <action name="homepage" class="homepageAction">
+            <result name="success">/user-homepage.jsp</result>
+        	<result name="null">/user-not-found.jsp</result>
+        </action>
+		<action name="data" class="getAllDataAction">
+            <result name="success">/all-data.jsp</result>
+        </action>
+        <action name="becomePublisher" class="becomePublisherAction">
+        	<result name="input">/publisher-apply-form.jsp</result>
+            <result name="success">/publisher-apply-form-sent.jsp</result>
+            <result name="restricted">/user-restricted.jsp</result>
+            <result name="login">/user-not-found.jsp</result>
+            <result name="deny">/action-denied.jsp</result>
+        </action>
+        <action name="viewMessageList" class="viewMessageListAction">
+        	<result name="deny">/action-denied.jsp</result>
+            <result name="success">/message-list.jsp</result>
+        </action>
+        <action name="upgradePublisher" class="upgradePublisherAction">
+        	<result name="deny">/action-denied.jsp</result>
+            <result name="success" type="redirect">/message_list</result>
+            <result name="fail">/fail.jsp</result>
+        </action>
+    </package>
+    <package name="ajax" extends="json-default">
+        <action name="login" class="loginAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="logout" class="logoutAction">
+			<result name="map" type="json">
+				<param name="root">redirectUrl</param>
+			</result>
+		</action>
+		<action name="checkNotification" class="checkNotificationAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="muteMessage" class="muteMessageAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+	</package>
+</struts>

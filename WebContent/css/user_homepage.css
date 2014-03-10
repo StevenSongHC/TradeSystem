@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+.summary {
+	border: medium double black;
+	border-style: dotted;
+	width: 300px;
+	padding: 6px;
+	margin-top: -10px;
+	font-size: 20px;
+}
+.summary .default {
+	font-size: 12px;
+}

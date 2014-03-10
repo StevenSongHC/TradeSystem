@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ts.entity.Publisher" table="publisher" catalog="ts">
+        <id name="id" type="integer">
+            <column name="pid" />
+            <generator class="native" />
+        </id>
+        <property name="uid" type="integer">
+            <column name="uid" length="4" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="p_name" length="50" />
+        </property>
+        <property name="summary" type="text">
+            <column name="p_summary" />
+        </property>
+        <property name="contact" type="string">
+            <column name="p_contact" length="75" />
+        </property>
+        <property name="joinDate" type="date">
+            <column name="p_join_date" />
+        </property>
+        <property name="goodCount" type="integer">
+            <column name="p_good_count" length="4" />
+        </property>
+        <property name="isActivate" 		column="p_isActivate" 		type="org.hibernate.type.NumericBooleanType" />
+        <property name="isRestricted" 		column="p_isRestricted" 		type="org.hibernate.type.NumericBooleanType" />
+        <property name="isAdmin" type="integer">
+            <column name="p_isAdmin" length="4" />
+        </property>
+    </class>
+    
+</hibernate-mapping>

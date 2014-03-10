@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ts.entity.Message" table="message" catalog="ts">
+        <id name="id" type="integer">
+            <column name="mid" />
+            <generator class="native" />
+        </id>
+        <property name="senderUid" type="integer">
+            <column name="sender_uid" length="4"  />
+        </property>
+        <property name="receiverUid" type="integer">
+            <column name="receiver_uid" length="4"  />
+        </property>
+        <property name="word" type="text">
+            <column name="word" />
+        </property>
+        <property name="time" type="timestamp">
+            <column name="time" />
+        </property>
+        <property name="noticeType" type="integer">
+            <column name="notice_type" length="4"  />
+        </property>
+        <property name="isRead" column="isRead" type="org.hibernate.type.NumericBooleanType" />
+    </class>
+    
+</hibernate-mapping>
