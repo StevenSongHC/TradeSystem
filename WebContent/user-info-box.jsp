@@ -156,7 +156,7 @@
 <div id="user">
     	<s:if test="#session.USER_SESSION!=null">
     		<span class="notification-amount"></span>
-    		<s:a href="/TradeSystem/u/%{#session.USER_SESSION.account}">${USER_SESSION.name}</s:a><s:if test="#session.PUBLISHER_SESSION!=null"><s:if test="#session.PUBLISHER_SESSION.isAdmin==2779"><span class="admin"> (<a href="#">A</a>)</span></s:if><s:else><span class="publisher"> (<a href="#">P</a>)</span></s:else></s:if> | <span class="logout">log out</span>
+    		<s:a href="/TradeSystem/u/%{#session.USER_SESSION.account}">${USER_SESSION.name}</s:a><s:if test="#session.PUBLISHER_SESSION!=null"><s:if test="#session.PUBLISHER_SESSION.isAdmin==2779"><span class="admin"> (<s:a href="#">A</s:a>)</span></s:if><s:else><span class="publisher"> (<s:a href="/TradeSystem/p/%{#session.PUBLISHER_SESSION.id}">P</s:a>)</span></s:else></s:if> | <span class="logout">log out</span>
     	</s:if>
     	<s:else>
     		<span class="login">log in</span> | <span class="join"><s:a href="/TradeSystem/join">join</s:a></span>

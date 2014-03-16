@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+.summary {
+	border: medium double black;
+	border-style: dotted;
+	width: 300px;
+	padding: 6px;
+	margin-top: -10px;
+	margin-right: 20px;
+	font-size: 20px;
+}
+.summary .default {
+	font-size: 12px;
+}
+.good-list {
+	border: medium double black;
+	margin: 25px;
+	padding: 15px;
+}
+.add-good a {
+	background-color: yellow;
+	text-decoration : none;
+	padding: 5px;
+}
+.add-good a:hover {
+	background-color: grey;
+	color: white;
+}

@@ -40,12 +40,16 @@ public class PublisherServiceImpl implements PublisherService {
 		return publisherDao.getPublisherByUid(uid);
 	}
 	
+	public Publisher getPublisherByPid(int pid) {
+		return publisherDao.getPublisherByPid(pid);
+	}
+	
 	public int getAdminUid() {
 		return publisherDao.getAdmin().getUid();
 	}
 	
 	public boolean isAdmin() {
-		return (getCurrentPublisher().getUid() == getAdminUid());
+		return getCurrentPublisher().getUid() == getAdminUid();
 	}
 	
 }

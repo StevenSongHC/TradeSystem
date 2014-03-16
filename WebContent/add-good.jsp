@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>新增一件商品</title>
 </head>
 <body>
-
-<jsp:include page="footer.jsp" />
+add good
 </body>
 </html>

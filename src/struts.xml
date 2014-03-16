@@ -31,6 +31,11 @@
             <result name="success" type="redirect">/message_list</result>
             <result name="fail">/fail.jsp</result>
         </action>
+        <action name="publisherHomepage" class="publisherHomepageAction">
+        	<result name="host">publisher-homepage-host.jsp</result>
+        	<result name="guest">publisher-homepage-guest.jsp</result>
+        	<result name="null"></result>
+        </action>
     </package>
     <package name="ajax" extends="json-default">
         <action name="login" class="loginAction">

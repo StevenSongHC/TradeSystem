@@ -13,6 +13,10 @@
         <to>/homepage?account=$1</to>
     </rule>
     <rule>
+        <from>/p/([0-9]+)</from>
+        <to>/publisherHomepage?pid=$1</to>
+    </rule>
+    <rule>
         <from>/become_publisher/([a-z]+)</from>
         <to>/becomePublisher?act=$1</to>
     </rule>

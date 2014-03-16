@@ -28,6 +28,8 @@ public interface PublisherService {
 	
 	public Publisher getPublisherByUid(int uid);
 	
+	public Publisher getPublisherByPid(int pid);
+	
 	public int getAdminUid();
 	
 	public boolean isAdmin();

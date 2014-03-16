@@ -16,4 +16,6 @@ public interface PublisherDAO {
 
 	public Publisher getPublisherByUid(int uid);
 	
+	public Publisher getPublisherByPid(int pid);
+	
 }
