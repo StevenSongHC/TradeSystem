@@ -19,7 +19,7 @@
 			url: "muteMessage",
 			data: { mid: mid, noticeType: noticeType },
 			dataType: "json"
-		}).done(function( json ) {
+		}).done(function( json ) {alert("done");
 			var data = eval("("+json+")");
 			if (data.flag)
 				location.reload();

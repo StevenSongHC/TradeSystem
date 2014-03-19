@@ -80,7 +80,7 @@ public class PublisherDAOImpl implements PublisherDAO {
 		Transaction tx = session.beginTransaction();
 		try {
 			// delete user from publisher table
-			session.createQuery("DELETE Publisher p WHERE p.uid=" + uid);
+			session.createQuery("DELETE Publisher p WHERE p.uid=" + uid).executeUpdate();
 			System.out.println("1: delete publisher, done");
 			session.flush();
 			

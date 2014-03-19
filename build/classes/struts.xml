@@ -36,6 +36,11 @@
         	<result name="guest">publisher-homepage-guest.jsp</result>
         	<result name="null"></result>
         </action>
+        <action name="addGood" class="addGoodAction">
+        	<result name="success">/publisher-homepage-host.jsp</result>
+        	<result name="restricted">/action-denied.jsp</result>
+        	<result name="error"></result>
+        </action>
     </package>
     <package name="ajax" extends="json-default">
         <action name="login" class="loginAction">

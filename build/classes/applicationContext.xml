@@ -72,6 +72,7 @@
 				<value>com/ts/entity/User.hbm.xml</value>
 				<value>com/ts/entity/Publisher.hbm.xml</value>
 				<value>com/ts/entity/Message.hbm.xml</value>
+				<value>com/ts/entity/Order.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -130,6 +131,11 @@
             <ref bean="sessionFactory"/>
         </property>
     </bean>
+    <bean id="orderDao" class="com.ts.dao.impl.OrderDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
     
     <!-- Service -->
     <bean id="userService" class="com.ts.service.impl.UserServiceImpl">
@@ -148,6 +154,11 @@
         </property>
         <property name="publisherDao">
             <ref bean="publisherDao"/>
+        </property>
+    </bean>
+    <bean id="orderService" class="com.ts.service.impl.OrderServiceImpl">
+        <property name="orderDao">
+            <ref bean="orderDao"/>
         </property>
     </bean>
     
@@ -188,6 +199,10 @@
         <property name="mService" ref="messageService"/>
     </bean>
     <bean id="publisherHomepageAction" scope="prototype" class="com.ts.action.publisher.HomePageAction">
+    	<property name="uService" ref="userService"/>
+    	<property name="pService" ref="publisherService"/>
+    </bean>
+    <bean id="addGoodAction" scope="prototype" class="com.ts.action.publisher.AddGoodAction">
     	<property name="uService" ref="userService"/>
     	<property name="pService" ref="publisherService"/>
     </bean>
