@@ -2,7 +2,9 @@
 <!DOCTYPE struts PUBLIC     
     "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"     
     "http://struts.apache.org/dtds/struts-2.3.dtd">    
-<struts>  
+<struts>
+    <!-- maxsize = 10 MB -->
+    <constant name="struts.multipart.maxSize" value="10485760" />
 	<package name="struts2" extends="struts-default">
 		<action name="register" class="registerAction">
 			<result name="input">/register.jsp</result>
@@ -34,12 +36,15 @@
         <action name="publisherHomepage" class="publisherHomepageAction">
         	<result name="host">publisher-homepage-host.jsp</result>
         	<result name="guest">publisher-homepage-guest.jsp</result>
-        	<result name="null"></result>
         </action>
         <action name="addGood" class="addGoodAction">
-        	<result name="success">/publisher-homepage-host.jsp</result>
+        	<result name="success">/add-good.jsp</result>
         	<result name="restricted">/action-denied.jsp</result>
-        	<result name="error"></result>
+        </action>
+        <action name="publishGood" class="publishGoodAction">
+        	<result name="success">/publisher-homepage-host.jsp</result>
+        	<result name="input">/add-good.jsp</result>
+        	<result name="error">/error-404.jsp</result>
         </action>
     </package>
     <package name="ajax" extends="json-default">
@@ -59,6 +64,16 @@
 			</result>
 		</action>
 		<action name="muteMessage" class="muteMessageAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="publisherUpload" class="publisherUploadAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="saveGood" class="saveGoodAction">
 			<result name="map" type="json">
 				<param name="root">json</param>
 			</result>

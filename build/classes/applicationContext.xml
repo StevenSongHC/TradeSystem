@@ -41,7 +41,7 @@
 		<property name="acquireRetryAttempts" value="30" />
 		<property name="acquireRetryDelay" value="1000" /> 
 		<property name="idleConnectionTestPeriod" value="3000" />
-		<property name="checkoutTimeout" value="3000" />
+		<property name="checkoutTimeout" value="1800" />
 		<property name="maxStatements" value="6000" />
 	</bean>
 	
@@ -72,10 +72,19 @@
 				<value>com/ts/entity/User.hbm.xml</value>
 				<value>com/ts/entity/Publisher.hbm.xml</value>
 				<value>com/ts/entity/Message.hbm.xml</value>
+				<value>com/ts/entity/Good.hbm.xml</value>
 				<value>com/ts/entity/Order.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
+	
+    <!-- Spring FileUpload -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8" />
+        <property name="maxUploadSize" value="10240" />
+        <property name="maxInMemorySize" value="5120" />
+    </bean>
   
     <!-- TransactionManager -->  
     <bean id="transactionManager"  
@@ -131,6 +140,11 @@
             <ref bean="sessionFactory"/>
         </property>
     </bean>
+    <bean id="goodDao" class="com.ts.dao.impl.GoodDAOImpl">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
     <bean id="orderDao" class="com.ts.dao.impl.OrderDAOImpl">
         <property name="sessionFactory">
             <ref bean="sessionFactory"/>
@@ -154,6 +168,11 @@
         </property>
         <property name="publisherDao">
             <ref bean="publisherDao"/>
+        </property>
+    </bean>
+    <bean id="goodService" class="com.ts.service.impl.GoodServiceImpl">
+        <property name="goodDao">
+            <ref bean="goodDao"/>
         </property>
     </bean>
     <bean id="orderService" class="com.ts.service.impl.OrderServiceImpl">
@@ -203,7 +222,19 @@
     	<property name="pService" ref="publisherService"/>
     </bean>
     <bean id="addGoodAction" scope="prototype" class="com.ts.action.publisher.AddGoodAction">
+    	<property name="pService" ref="publisherService"/>
+    </bean>
+    <bean id="publishGoodAction" scope="prototype" class="com.ts.action.publisher.PublishGoodAction">
     	<property name="uService" ref="userService"/>
     	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    </bean>
+    <bean id="saveGoodAction" scope="prototype" class="com.ts.action.publisher.SaveGoodAction">
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    </bean>
+    <bean id="publisherUploadAction" scope="prototype" class="com.ts.action.publisher.UploadFileAction">
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
     </bean>
 </beans>

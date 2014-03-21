@@ -1,29 +1,25 @@
 package com.ts.action.publisher;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.ts.entity.Publisher;
 import com.ts.service.PublisherService;
-import com.ts.service.UserService;
 
 public class AddGoodAction extends ActionSupport {
 
 	/**
-	 * 提交新商品
+	 * link in the add-good page
 	 */
 	private static final long serialVersionUID = 6979702910252841864L;
 	
-	private UserService uService;
 	private PublisherService pService;
 	
 	public String execute() throws Exception {
+		Publisher publisher = pService.getCurrentPublisher();
+		// not a publisher, get restricted or no activated
+		if (publisher == null || publisher.getIsRestricted() || !publisher.getIsActivate())
+			return "restricted";
 		
 		return SUCCESS;
-	}
-
-	public UserService getuService() {
-		return uService;
-	}
-	public void setuService(UserService uService) {
-		this.uService = uService;
 	}
 	public PublisherService getpService() {
 		return pService;

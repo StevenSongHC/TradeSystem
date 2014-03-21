@@ -9,13 +9,13 @@
             <generator class="native" />
         </id>
         <property name="goodId" type="integer">
-            <column name="gid" length="6"  />
+            <column name="gid" length="6" not-null="true" />
         </property>
         <property name="sellerId" type="integer">
-            <column name="o_sellerid" length="4"  />
+            <column name="o_sellerid" length="4" />
         </property>
         <property name="buyerId" type="integer">
-            <column name="o_buyerid" length="4"  />
+            <column name="o_buyerid" length="4" />
         </property>
         <property name="addTime" type="timestamp">
             <column name="o_add_time" />

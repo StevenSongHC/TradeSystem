@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+#main {
+	width: 60%;
+	margin: auto;
+}
+#title {
+	margin: 10px;
+	padding: 5px;
+	width: 60%;
+	font-size: 18px;
+}
+
+.pic-panel img {
+	width: 200px;
+	height: 145px;
+	border: medium solid gray;
+}
+#error-field {
+	margin-left: 10px;
+	color: red;
+	font-size: 18px;
+}
+#msg-field {
+	margin-left: 10px;
+	color: green;
+	font-size: 18px;
+}

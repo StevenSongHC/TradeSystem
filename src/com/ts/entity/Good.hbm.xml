@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ts.entity.Good" table="good" catalog="ts">
+        <id name="id" type="integer">
+            <column name="gid" />
+            <generator class="native" />
+        </id>
+        <property name="publisherId" type="integer">
+            <column name="pid" length="4" not-null="true" />
+        </property>
+        <property name="title" type="string">
+            <column name="g_title" length="125" not-null="true" />
+        </property>
+        <property name="pic" type="string">
+            <column name="g_pic" length="100" />
+        </property>
+        <property name="price" type="double">
+            <column name="g_price" not-null="true" />
+        </property>
+        <property name="desc" type="text">
+            <column name="g_desc" />
+        </property>
+        <property name="buyerCount" type="integer">
+            <column name="g_buyer_count" length="6" />
+        </property>
+        <property name="addTime" type="timestamp">
+            <column name="g_add_time" />
+        </property>
+        <property name="isComplete" column="g_isComplete" type="org.hibernate.type.NumericBooleanType" />
+        <property name="isAgree" column="g_isAgreed" type="org.hibernate.type.NumericBooleanType" />
+        <property name="isAvailable" column="g_isAvailable" type="org.hibernate.type.NumericBooleanType" />
+        <property name="isDelete" column="g_isDeleted" type="org.hibernate.type.NumericBooleanType" />
+    </class>
+    
+</hibernate-mapping>

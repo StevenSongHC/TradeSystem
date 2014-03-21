@@ -7,10 +7,11 @@ public class Good {
 	private int publisherId;
 	private String title;
 	private String pic;
-	private int price;
+	private double price;
 	private String desc;
 	private int buyerCount;
 	private Timestamp addTime;
+	private boolean isComplete;
 	private boolean isAgree;
 	private boolean isAvailable;
 	private boolean isDelete;
@@ -38,10 +39,10 @@ public class Good {
 	public void setPic(String pic) {
 		this.pic = pic;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public String getDesc() {
@@ -61,6 +62,12 @@ public class Good {
 	}
 	public void setAddTime(Timestamp addTime) {
 		this.addTime = addTime;
+	}
+	public boolean getIsComplete() {
+		return isComplete;
+	}
+	public void setIsComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 	public boolean getIsAgree() {
 		return isAgree;
