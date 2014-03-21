@@ -21,4 +21,8 @@ public class GoodServiceImpl implements GoodService {
 		return goodDao.updateGood(good);
 	}
 	
+	public Good getGoodById(int gid) {
+		return goodDao.getGoodById(gid);
+	}
+	
 }

@@ -20,7 +20,7 @@ $(document).ready(function() {
 			var data = eval("(" + json + ")");
 			$(".pic-panel .upload-status").html(data.msg);
 			$("#pic-preview").attr({"src" : "<%=basepath%>/" + data.picPath, "path" : data.picPath});
-			go("addGood", true);
+			saveGood(true);
 		}
 	};
 	$("#pic-form").ajaxForm(options);
@@ -39,50 +39,61 @@ function uploadPic() {
 	}
 }
 
-function go(url, skipCheck) {
-	if (($("#title").val().trim() != "" && $("#pic-preview").attr("path").trim() != "" && $("#price").val().trim() != "" && $("#price").val().trim().match(/^\+?(:?(:?\d+\.\d+)|(:?\d+))$/)) || skipCheck)
-		window.location.href=url+"?title="+$("#title").val()+"&pic="+$("#pic-preview").attr("path")+"&price="+$("#price").val()+"&desc="+$("#desc").val();
+function saveGood(skipCheck) {
+	if (($("#title").val().trim() != "" && $("#pic-preview").attr("path").trim() != "" && $("#price").val().trim() != "" && $("#price").val().trim().match(/^\+?(:?(:?\d+\.\d+)|(:?\d+))$/)) || skipCheck) {
+		$.ajax( {
+			type: "POST",
+			url: "saveGood",
+			data: { gid : $("#gid").val(), title: $("#title").val(), pic : $("#pic-preview").attr("path"), price : $("#price").val(), desc : $("#desc").val() },
+			dataType: "json"
+		}).done(function( json ) {
+			var data = eval("("+json+")");
+			$("#error-field").html(data.error);
+			$("#msg-field").html(data.msg);
+		}).fail(function() {
+			$("#error-field").html("保存商品信息出错");
+			$("#msg-field").html("");
+		}).error(function (XMLHttpRequest, textStatus, errorThrown) {
+			$("#ajax").html(XMLHttpRequest.responseText);
+		});
+	}
 	else {
 		$("#error-field").html("illege form");
 		$("#msg-field").html("");
 	}
 }
 
-function publishGood() {
-	alert("function not build yet");
-	/* go("publishGood"); */
-}
-
 </script>
-<title>新增一件商品</title>
+<title>编辑商品</title>
 </head>
 <body>
 <jsp:include page="user-info-box.jsp" />
 
 <div id="main">
-	<p>商品名称*<input type="text" name="title" id="title"></p>
+	<input type="hidden" id="gid" value="${good.id}" />
+	<p>商品名称*<input type="text" name="title" id="title" value="${good.title}"/></p>
 	<p>价格*
-		<input type="text" name="price" id="price" />
+		<input type="text" name="price" id="price"  value="${good.price}" />
 		<select name="currency">
 		<option>RMB</option>
 		</select>
 	</p>
 	<div>图片
 		<div class="pic-panel">
-		<img alt="默认" src="<%=basepath%>/images/good/nopic.jpg" id="pic-preview" path="images/good/nopic.jpg" />
+		<img alt="默认" src="<%=basepath%>/${good.pic}" id="pic-preview" path="${good.pic}" />
 		<form id="pic-form" method="post" enctype="multipart/form-data">
 			<input type="file" name="file" id="pic" />
 			<input type="hidden" name="type" value="goodPic" />
 			<input type="hidden" name="fileType" id="fileType" />
-			<input type="button" value="上传后新建" onclick="uploadPic()" />
+			<input type="button" value="上传并保存" onclick="uploadPic()" />
 		</form>
 		<span class="upload-status"></span>
 		</div>
 	</div>
 	<p>描述</p>
-	<p><textarea rows="10" cols=100% name="desc" id="desc"></textarea></p>
-	<input type="button" value="保存" onclick="go('addGood',false)"/>
-	<input type="button" value="提交" onclick="publishGood()" />
+	<p><textarea rows="10" cols=100% name="desc" id="desc">${good.desc}</textarea></p>
+	<input type="button" value="保存" onclick="saveGood(false)"/>
+	<input type="button" value="提交" />
 	<span id="error-field"></span><span id="msg-field"></span>
 </div>
 

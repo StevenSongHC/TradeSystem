@@ -1,19 +1,16 @@
 package com.ts.action.publisher;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.ts.entity.Good;
 import com.ts.entity.Publisher;
 import com.ts.service.GoodService;
 import com.ts.service.PublisherService;
-import com.ts.util.CookieUtil;
 
-public class SaveGoodAction extends ActionSupport implements ServletResponseAware, ServletRequestAware {
+public class SaveGoodAction extends ActionSupport {
 
 	/**
 	 * 动态保存商品页面
@@ -22,41 +19,32 @@ public class SaveGoodAction extends ActionSupport implements ServletResponseAwar
 	
 	private PublisherService pService;
 	private GoodService gService;
+	private int gid;
 	private String title;
 	private String pic;
 	private double price;
 	private String desc;
 	private String json;
-	private HttpServletResponse response;
-	private HttpServletRequest request;
 
 	public String execute() throws Exception {
 		Publisher publisher = pService.getCurrentPublisher();
-		Good good = new Good();
-		good.setPublisherId(publisher.getId());
-		good.setTitle(title);
-		good.setPic(pic);
-		good.setPrice(price);
-		good.setDesc(desc);
 		if (publisher != null) {
-			// if it is a new good
-			if (!CookieUtil.haveSuchCookie(request, com.ts.util.CookieUtil.GOOD_COOKIE)) {
-				if (gService.addGood(good)) {
-					response.addCookie(CookieUtil.generateGoodCookie(good));
-					json = "{'flag' : true}";
+			Good good = gService.getGoodById(gid);
+			good.setTitle(title);
+			good.setPrice(price);
+			good.setDesc(desc);
+			// new pic updated
+			// delete the old one
+			if (!pic.equals(good.getPic())) {
+				if (new File(ServletActionContext.getServletContext().getRealPath("")+"/"+good.getPic()).delete())
+					good.setPic(pic);
+				else {
+					json = "{'error' : '图片上传失败'}";
+					return "map";
 				}
-				else
-					json = "{'flag' : false}";
 			}
-			// if it is an existing good (validate by good_cookie)
-			else {
-				// get the gid from cookie
-				good.setId(Integer.parseInt(CookieUtil.readCookieValue(request, com.ts.util.CookieUtil.GOOD_COOKIE).split(",")[0]));
-				if (gService.updateGood(good))
-					json = "{'flag' : true}";
-				else
-					json = "{'flag' : false}";
-			}
+			if (gService.updateGood(good))
+				json = "{'msg' : '保存成功'}";
 		}
 		return "map";
 	}
@@ -72,6 +60,12 @@ public class SaveGoodAction extends ActionSupport implements ServletResponseAwar
 	}
 	public void setgService(GoodService gService) {
 		this.gService = gService;
+	}
+	public int getGid() {
+		return gid;
+	}
+	public void setGid(int gid) {
+		this.gid = gid;
 	}
 	public String getTitle() {
 		return title;
@@ -102,12 +96,6 @@ public class SaveGoodAction extends ActionSupport implements ServletResponseAwar
 	}
 	public void setJson(String json) {
 		this.json = json;
-	}
-	public void setServletResponse(HttpServletResponse response) {
-		this.response = response;
-	}
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
 	}
 
 }

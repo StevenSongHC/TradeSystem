@@ -56,4 +56,8 @@ public class GoodDAOImpl implements GoodDAO {
 		return true;
 	}
 	
+	public Good getGoodById(int gid) {
+		return (Good) sessionFactory.openSession().get(Good.class, gid);
+	}
+	
 }

@@ -223,6 +223,11 @@
     </bean>
     <bean id="addGoodAction" scope="prototype" class="com.ts.action.publisher.AddGoodAction">
     	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    </bean>
+    <bean id="editGoodAction" scope="prototype" class="com.ts.action.publisher.EditGoodAction">
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
     </bean>
     <bean id="publishGoodAction" scope="prototype" class="com.ts.action.publisher.PublishGoodAction">
     	<property name="uService" ref="userService"/>

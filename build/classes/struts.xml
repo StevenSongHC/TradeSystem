@@ -38,8 +38,15 @@
         	<result name="guest">publisher-homepage-guest.jsp</result>
         </action>
         <action name="addGood" class="addGoodAction">
-        	<result name="success">/add-good.jsp</result>
+            <result name="input">/add-good.jsp</result>
+        	<result name="success" type="redirect">/g/${gid}</result>
         	<result name="restricted">/action-denied.jsp</result>
+        	<result name="error">/fail.jsp</result>
+        </action>
+        <action name="editGood" class="editGoodAction">
+        	<result name="success">/edit-good.jsp</result>
+            <result name="view">/view-good.jsp</result>
+        	<result name="none">/error-404.jsp</result>
         </action>
         <action name="publishGood" class="publishGoodAction">
         	<result name="success">/publisher-homepage-host.jsp</result>

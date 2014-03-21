@@ -8,4 +8,6 @@ public interface GoodDAO {
 	
 	public boolean updateGood(Good good);
 	
+	public Good getGoodById(int gid);
+	
 }

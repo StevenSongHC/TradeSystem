@@ -8,4 +8,6 @@ public interface GoodService {
 	
 	public boolean updateGood(Good good);
 	
+	public Good getGoodById(int gid);
+	
 }

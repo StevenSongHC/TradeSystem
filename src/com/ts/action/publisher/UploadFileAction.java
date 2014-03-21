@@ -33,11 +33,9 @@ public class UploadFileAction extends ActionSupport {
 			String saveName = null;
 			// file storage path
 			String savePath = null;
-			// current time
-			long time = Calendar.getInstance().getTimeInMillis();
 			
 			if (type.equals("goodPic")) {
-				saveName = "images/good/" + publisher.getId() + "_" + time + fileType;
+				saveName = "images/good/" + publisher.getId() + "_" + Calendar.getInstance().getTimeInMillis() + fileType;
 				savePath = ServletActionContext.getServletContext().getRealPath("") + "/" + saveName;
 				
 				if (file != null) {
