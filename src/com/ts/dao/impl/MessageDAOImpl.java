@@ -16,12 +16,9 @@ public class MessageDAOImpl implements MessageDAO {
 	private final String[] COLUMN = {"new_message",
 							  		 "order_give",
 							  		 "order_cancel",
-							  		 "good_apply_pass",
-							  		 "good_apply_deny",
 							  		 "good_suspended",
 							  		 "good_deleted",
-							  		 "new_publisher_apply",
-							  		 "admin_change_error"};
+							  		 "new_publisher_apply"};
 	private SessionFactory sessionFactory;
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -33,8 +30,8 @@ public class MessageDAOImpl implements MessageDAO {
 	public int getNotificationAmount(int uid) {
 		Session session = sessionFactory.openSession();
 		Query query = session.createSQLQuery("SELECT new_message+order_give+order_cancel+" +
-											 "good_apply_pass+good_apply_deny+good_suspended+good_deleted+" +
-											 "new_publisher_apply+admin_change_error AS amount " + 
+											 "good_suspended+good_deleted+" +
+											 "new_publisher_apply AS amount " + 
 											 "FROM notification WHERE uid=" + uid)
 										.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		Object result = query.uniqueResult();
@@ -48,12 +45,10 @@ public class MessageDAOImpl implements MessageDAO {
 	public String[] getNotification(int uid) {
 		Session session = sessionFactory.openSession();
 		Query query = session.createSQLQuery("SELECT new_message AS '0',order_give AS '1',order_cancel AS '2'," + 
-											 "good_apply_pass AS '3',good_apply_deny AS '4',good_suspended AS '5'," + 
-											 "good_deleted AS '6',new_publisher_apply AS '7',admin_change_error AS '8' " + 
+											 "good_suspended AS '3',good_deleted AS '4',new_publisher_apply AS '5' " + 
 											 "FROM notification WHERE uid=" + uid + 
 											 " AND (new_message>0 OR order_give>0 OR order_cancel>0 OR " +
-											 "good_apply_pass>0 OR good_apply_deny>0 OR good_suspended>0 OR " +
-											 "good_deleted>0 OR new_publisher_apply>0 OR admin_change_error>0)")
+											 "good_suspended>0 OR good_deleted>0 OR new_publisher_apply>0)")
 										.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		// got notification
 		Object result = query.uniqueResult();

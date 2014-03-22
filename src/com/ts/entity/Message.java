@@ -10,15 +10,11 @@ public class Message {
 	private Timestamp time;
 	/**
 	 * 0 = u2u message
-	 * 1 = get restricted notice
-	 * 2 = get a new order notice
-	 * 3 = order canceled notice
-	 * 4 = good passed notice
-	 * 5 = good denied notice
-	 * 6 = good suspended notice
-	 * 7 = good deleted notice
-	 * 8 = become publisher apply sent notice
-	 * 9 = someone else try to change admin
+	 * 1 = get a new order notice
+	 * 2 = order canceled notice
+	 * 3 = good suspended notice
+	 * 4 = good deleted notice
+	 * 5 = become publisher apply sent notice
 	 */
 	public int noticeType;
 	private boolean isRead;

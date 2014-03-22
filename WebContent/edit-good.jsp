@@ -63,6 +63,13 @@ function saveGood(skipCheck) {
 	}
 }
 
+function publishGood() {
+	if (($("#title").val().trim() != "" && $("#pic-preview").attr("path").trim() != "" && $("#price").val().trim() != "" && $("#price").val().trim().match(/^\+?(:?(:?\d+\.\d+)|(:?\d+))$/)))
+		window.location.href = "publishGood?gid="+$("#gid").val()+"&title="+$("#title").val()+"&pic="+$("#pic-preview").attr("path")+"&price="+$("#price").val()+"&desc="+$("#desc").val();
+	else
+		alert("illege form");
+}
+
 </script>
 <title>编辑商品</title>
 </head>
@@ -93,7 +100,7 @@ function saveGood(skipCheck) {
 	<p>描述</p>
 	<p><textarea rows="10" cols=100% name="desc" id="desc">${good.desc}</textarea></p>
 	<input type="button" value="保存" onclick="saveGood(false)"/>
-	<input type="button" value="提交" />
+	<input type="button" value="提交" onclick="publishGood()" />
 	<span id="error-field"></span><span id="msg-field"></span>
 </div>
 

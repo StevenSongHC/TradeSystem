@@ -41,7 +41,7 @@
 		<s:if test="noticeType==0">
 			<div class="new-message">${senderName}:${word} -- ${time}<button onclick="muteMessage(${mid},${noticeType})">read</button></div>
 		</s:if>
-		<s:if test="noticeType==7">
+		<s:if test="noticeType==5">
 			<div class="new-publisher-apply">${senderName} ${word} -- ${time} <a href="upgradePublisher?upgrade=true&uid=${senderUid}">agree</a> <a href="upgradePublisher?upgrade=false&uid=${senderUid}">refuse</a></div>
 		</s:if>
 	</s:iterator>

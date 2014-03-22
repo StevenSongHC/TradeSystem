@@ -8,7 +8,7 @@ create table good(
 	g_buyer_count int(6) default 0,
 	g_add_time timestamp,
 	g_isComplete int(1) default 0,
-	g_isAgreed int(1) default 0,
+	g_isAgreed int(1) default 1,
 	g_isAvailable int(1) default 1,
 	g_isDeleted int(1) default 0
 );

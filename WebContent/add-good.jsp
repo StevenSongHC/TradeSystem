@@ -49,8 +49,10 @@ function go(url, skipCheck) {
 }
 
 function publishGood() {
-	alert("function not build yet");
-	/* go("publishGood"); */
+	if (($("#title").val().trim() != "" && $("#pic-preview").attr("path").trim() != "" && $("#price").val().trim() != "" && $("#price").val().trim().match(/^\+?(:?(:?\d+\.\d+)|(:?\d+))$/)))
+		window.location.href = "publishGood?title="+$("#title").val()+"&pic="+$("#pic-preview").attr("path")+"&price="+$("#price").val()+"&desc="+$("#desc").val();
+	else
+		$("#error-field").html("illege form");
 }
 
 </script>

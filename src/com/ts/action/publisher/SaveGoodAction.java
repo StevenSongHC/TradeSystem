@@ -32,17 +32,21 @@ public class SaveGoodAction extends ActionSupport {
 			Good good = gService.getGoodById(gid);
 			good.setTitle(title);
 			good.setPrice(price);
-			good.setDesc(desc);
+			good.setDesc(desc);System.out.println(pic);
 			// new pic updated
-			// delete the old one
 			if (!pic.equals(good.getPic())) {
-				if (new File(ServletActionContext.getServletContext().getRealPath("")+"/"+good.getPic()).delete())
-					good.setPic(pic);
-				else {
-					json = "{'error' : '图片上传失败'}";
-					return "map";
+				// not the default pic
+				// delete the old one (do not delete the default pic)
+				if (!good.getPic().equals("images/good/nopic.jpg")) {
+					// failed to delete the old pic
+					if (!new File(ServletActionContext.getServletContext().getRealPath("")+"/"+good.getPic()).delete()) {
+						json = "{'error' : '图片上传失败'}";
+						return "map";
+					}
 				}
+				good.setPic(pic);
 			}
+			
 			if (gService.updateGood(good))
 				json = "{'msg' : '保存成功'}";
 		}

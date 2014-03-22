@@ -49,8 +49,8 @@
         	<result name="none">/error-404.jsp</result>
         </action>
         <action name="publishGood" class="publishGoodAction">
-        	<result name="success">/publisher-homepage-host.jsp</result>
-        	<result name="input">/add-good.jsp</result>
+        	<result name="success" type="redirect">homepage</result>
+        	<result name="login">/action-denied.jsp</result>
         	<result name="error">/error-404.jsp</result>
         </action>
     </package>
