@@ -40,7 +40,9 @@ public class PublishGoodAction extends ActionSupport {
 		good.setPic(pic);
 		good.setPrice(price);
 		good.setDesc(desc);
+		good.setPublisherId(publisher.getId());
 		good.setIsComplete(true);
+		good.setIsAvailable(true);
 		// not necessary. Why, cuz the table still old
 		good.setIsAgree(true);
 		

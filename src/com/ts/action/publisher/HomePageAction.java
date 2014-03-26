@@ -7,6 +7,7 @@ import org.apache.struts2.interceptor.RequestAware;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ts.entity.Publisher;
 import com.ts.entity.User;
+import com.ts.service.GoodService;
 import com.ts.service.PublisherService;
 import com.ts.service.UserService;
 
@@ -19,7 +20,10 @@ public class HomePageAction extends ActionSupport implements RequestAware {
 	
 	public UserService uService;
 	private PublisherService pService;
+	private GoodService gService;
 	private int pid;
+	private int currentPage;
+	private int pageSize;
 	private Map<String, Object> requestMap;
 
 	public String execute() throws Exception {
@@ -31,12 +35,28 @@ public class HomePageAction extends ActionSupport implements RequestAware {
 		
 		requestMap.put("publisher", publisher);
 		
-		if (user == null)
+		// default return the first page of goods data
+		if (currentPage == 0)
+			currentPage = 1;
+		// pageSize's default value is 5
+		if (pageSize == 0)
+			pageSize = 5;
+		
+		// anonymous visitor
+		if (user == null) {
+			requestMap.put("pageNavi", gService.getGoodPageList(pid, pageSize, currentPage, 1, 1, 1, 0, -1));
 			return "guest";
-		else if (user.getId() == publisher.getUid())
+		}
+		// owner
+		else if (user.getId() == publisher.getUid()) {
+			requestMap.put("pageNavi", gService.getGoodPageList(pid, pageSize, currentPage, 2, 2, 2, 0, -1));
 			return "host";
-		else
+		}
+		// visitor
+		else {
+			requestMap.put("pageNavi", gService.getGoodPageList(pid, pageSize, currentPage, 1, 1, 1, 0, -1));
 			return "guest";
+		}
 	}
 
 	public UserService getuService() {
@@ -51,11 +71,29 @@ public class HomePageAction extends ActionSupport implements RequestAware {
 	public void setpService(PublisherService pService) {
 		this.pService = pService;
 	}
+	public GoodService getgService() {
+		return gService;
+	}
+	public void setgService(GoodService gService) {
+		this.gService = gService;
+	}
 	public int getPid() {
 		return pid;
 	}
 	public void setPid(int pid) {
 		this.pid = pid;
+	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 	public void setRequest(Map<String, Object> requestMap) {
 		this.requestMap = requestMap;

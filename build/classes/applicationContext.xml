@@ -41,7 +41,6 @@
 		<property name="acquireRetryAttempts" value="30" />
 		<property name="acquireRetryDelay" value="1000" /> 
 		<property name="idleConnectionTestPeriod" value="3000" />
-		<property name="checkoutTimeout" value="1800" />
 		<property name="maxStatements" value="6000" />
 	</bean>
 	
@@ -220,6 +219,7 @@
     <bean id="publisherHomepageAction" scope="prototype" class="com.ts.action.publisher.HomePageAction">
     	<property name="uService" ref="userService"/>
     	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
     </bean>
     <bean id="addGoodAction" scope="prototype" class="com.ts.action.publisher.AddGoodAction">
     	<property name="pService" ref="publisherService"/>
