@@ -25,6 +25,6 @@ public interface GoodService {
 	 * @return List<Good>
 	 */
 	public PageBean getGoodPageList(final int pid, final int pageSize, final int currentPage, 
-									final int isComplete, final int isAgreed, final int isAvailable, final int isDeleted, final int timeOrder);
+									final int isComplete, final int isAgreed, final int isAvailable, final int isDeleted, final int dateOrder);
 	
 }

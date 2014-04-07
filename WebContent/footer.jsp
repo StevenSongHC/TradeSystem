@@ -4,7 +4,7 @@
 
 <style type="text/css">
 .declaration-body {
-	position:absolute;
+	position:fixed;
 	bottom:0px;
 	right:10px;
 	width:100%;

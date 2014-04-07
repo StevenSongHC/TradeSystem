@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>查看商品</title>
+<title>查看商品 - ${good.title}</title>
 </head>
 <body>
-查看商品
+查看商品 ${good.title}
 </body>
 </html>

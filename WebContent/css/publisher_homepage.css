@@ -28,6 +28,15 @@
 	color: white;
 }
 
+.func-bar {
+	float: right;
+}
+.func-bar span {
+	color: #000;
+	font-size: 13px;
+	margin-right: 15px;
+}
+
 .item {
 	margin-top: 10px;
 	margin-buttom: 110px;
@@ -76,7 +85,56 @@
 	color: rgb(201, 201, 201);
 }
 
+.page-info {
+	text-align: center;
+	margin-top: 20px;
+}
+.page-navi span {
+	cursor: pointer;
+}
 .page-navi {
 	text-align: center;
 	margin-top: 20px;
 }
+.page-navi .first, .page-navi .last {
+	color: rgb(190, 240, 255);
+	font-weight: bold;
+	font-size: 20px;
+}
+.page-navi .first {
+	margin-right: 10px;
+}
+.page-navi .last {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.page-navi .counter-base, .page-navi .counter-next {
+	color: #FFF;
+	background-color: rgb(211, 240, 138);
+	font-weight: bold;
+	margin: 5px;
+	padding: 2px;
+}
+.page-navi .counter {
+	padding: 4px;
+	margin: 5px;
+	border: 1px solid rgb(211, 240, 138);
+	padding-top: -5px;
+}
+.page-navi .current {
+	padding: 4px;
+	margin: 5px;
+	cursor: auto;
+	background-color: rgb(211, 240, 138);
+}
+.page-navi .null {
+	padding: 4px;
+	margin: 5px;
+	background-color: rgb(231, 231, 231);
+	border-width: 0;
+	cursor: default;
+}
+.page-navi .hover {
+	background-color: rgb(118, 138, 240);
+}
+

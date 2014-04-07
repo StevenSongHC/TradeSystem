@@ -14,6 +14,8 @@ public class PageBean {
 	private int totalPage;				// 总页数
 	private int currentPage;			// 当前第几页
 	
+	private String naviBar;				// 页面导航栏
+	
 	public List<?> getResult() {
 		return result;
 	}
@@ -43,6 +45,12 @@ public class PageBean {
 	}
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
+	}
+	public String getNaviBar() {
+		return naviBar;
+	}
+	public void setNaviBar(String naviBar) {
+		this.naviBar = naviBar;
 	}
 	
 	/**

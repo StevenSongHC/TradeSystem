@@ -242,4 +242,9 @@
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
     </bean>
+    <bean id="pageNaviAction" scope="prototype" class="com.ts.action.user.PageNaviAction">
+    	<property name="uService" ref="userService"/>
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    </bean>
 </beans>

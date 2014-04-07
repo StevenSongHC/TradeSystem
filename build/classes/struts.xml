@@ -85,5 +85,10 @@
 				<param name="root">json</param>
 			</result>
 		</action>
+		<action name="getPage" class="pageNaviAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
 	</package>
 </struts>

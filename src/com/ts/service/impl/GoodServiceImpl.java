@@ -4,6 +4,7 @@ import com.ts.bean.PageBean;
 import com.ts.dao.GoodDAO;
 import com.ts.entity.Good;
 import com.ts.service.GoodService;
+import com.ts.util.PageUtil;
 
 public class GoodServiceImpl implements GoodService {
 	private GoodDAO goodDao;
@@ -27,7 +28,7 @@ public class GoodServiceImpl implements GoodService {
 	}
 	
 	public PageBean getGoodPageList(int pid, int pageSize, int currentPage, 
-									int isComplete, int isAgreed, int isAvailable, int isDeleted, int timeOrder) {
+									int isComplete, int isAgreed, int isAvailable, int isDeleted, int dateOrder) {
 		
 		// query condition(s)
 		StringBuilder condition = new StringBuilder();
@@ -69,14 +70,15 @@ public class GoodServiceImpl implements GoodService {
 		pb.setAllRow(goodDao.getAllRow(condition.toString()));
 
 		// order by ascending add-time
-		if (timeOrder == -1)
+		if (dateOrder == -1)
 			condition.append(" order by g.addTime desc");
 		// order by descending add-time, DEFAULT
-		else if (timeOrder == 1)
+		else if (dateOrder == 1)
 			condition.append(" order by g.addTime asc");
 		
 		pb.setTotalPage(pb.countTotalPage(pageSize, pb.getAllRow()));
 		pb.setResult(goodDao.queryPage(pb.countOffset(pageSize, currentPage), pageSize, condition.toString()));
+		pb.setNaviBar(PageUtil.drawNavi(pb.getCurrentPage(), pb.getTotalPage()));
 		return pb;
 	}
 	

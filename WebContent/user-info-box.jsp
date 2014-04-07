@@ -9,7 +9,7 @@
 	background-color: #DFD;
 	padding-left: 6.5px;
 }
-#user a, span {
+#user a,#user span {
 	text-decoration: none;
 	color: gray;
 }
