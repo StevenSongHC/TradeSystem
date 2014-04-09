@@ -11,23 +11,32 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#buy").hover(function() {
-		$(this).css({"background" : "rgb(245, 255, 182)", "color" : "rgb(182, 202, 255)"});
+		$(this).css({"background" : "rgb(23, 86, 255)", "color" : "rgb(182, 202, 255)"});
 	}, function() {
 		$(this).css({"background" : "rgb(182, 202, 255)", "color" : "rgb(245, 255, 182)"});
+	}).click(function() {$(cookie.user_cookie);
+		if ($(cookie.user_cookie) == null)
+			$(".login").click();
+		giveOrder();
 	});
 });
+
+function giveOrder() {
+	
+}
 </script>
 </head>
 <jsp:include page="user-info-box.jsp" />
 <body>
 <h1>${good.title}</h1>
 
+<span id="buyer-amount">(${good.buyerCount})</span>
 <s:if test="#request.canBuy=='true'">
-	<span id="buyer-amount">${good.buyerCount}</span><span id="buy">订购</span><span class="price">${good.price} RMB</span>
+	<span id="buy">订购</span>
 </s:if>
+<span class="price">${good.price} RMB</span>
 
 <div id="desc">${good.desc}<div class="date">${good.addTime}</div></div>
-
 <jsp:include page="order-history.jsp" />
 <jsp:include page="footer.jsp" />
 </body>

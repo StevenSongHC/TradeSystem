@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.ts.entity.Order" table="orders" catalog="ts">
+        <id name="id" type="integer">
+            <column name="oid" />
+            <generator class="native" />
+        </id>
+        <property name="goodId" type="integer">
+            <column name="gid" length="6" not-null="true" />
+        </property>
+        <property name="sellerId" type="integer">
+            <column name="o_sellerid" length="4" />
+        </property>
+        <property name="buyerId" type="integer">
+            <column name="o_buyerid" length="4" />
+        </property>
+        <property name="addTime" type="timestamp">
+            <column name="o_add_time" />
+        </property>
+        <property name="finishTime" type="timestamp">
+            <column name="o_finish_time" />
+        </property>
+        <property name="isDone" column="o_isDone" type="org.hibernate.type.NumericBooleanType" />
+        <property name="isCancel" column="o_isCancel" type="org.hibernate.type.NumericBooleanType" />
+    </class>
+    
+</hibernate-mapping>
