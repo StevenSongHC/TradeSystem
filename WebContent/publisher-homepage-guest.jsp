@@ -13,24 +13,8 @@ String basepath = request.getContextPath();
 </head>
 <jsp:include page="user-info-box.jsp" />
 <body>
-GUEST
-<div class="good-list">
-	<span class="add-good"><a href="addGood">添加商品</a></span>
-	<hr>
-	<s:iterator value="#request.pageNavi.result" id="good">
-	<hr>
-	<div class="item">
-		<div class="title"><a href="<%=basepath%>/g/${good.id}">${good.title}</a></div>
-		<div class="price">${good.price}<span class="currency">RMB</span></div>
-		<div class="pic"><img src="<%=basepath%>/${good.pic}" /></div>
-		<div class="desc">${good.desc}</div>
-		<div class="date">${good.addTime}</div>
-		<div style="clear: both"></div>
-	</div>
-	</s:iterator>
-	<hr>
-	<div class="page-navi">共${pageNavi.allRow}条记录,每页显示${pageNavi.pageSize}条,一共${pageNavi.totalPage}页,当前第${pageNavi.currentPage}页</div>
-</div>
+
+<jsp:include page="good-list.jsp" />
 
 <jsp:include page="footer.jsp" />
 </body>

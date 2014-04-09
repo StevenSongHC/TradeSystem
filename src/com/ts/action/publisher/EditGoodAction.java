@@ -31,10 +31,12 @@ public class EditGoodAction extends ActionSupport implements RequestAware {
 
 		requestMap.put("good", good);
 		
-		// not a publisher or the host
+		// not the host
 		// a completed good
 		// authority restricted
 		if (publisher == null || publisher.getId() != good.getPublisherId() || publisher.getIsRestricted() || good.getIsComplete()) {
+			if ((publisher == null || publisher.getId() != good.getPublisherId()) && good.getIsComplete() && good.getIsAgree() && good.getIsAvailable() && !good.getIsDelete())
+				requestMap.put("canBuy", "true");
 			return "view";
 		}
 		// editable page

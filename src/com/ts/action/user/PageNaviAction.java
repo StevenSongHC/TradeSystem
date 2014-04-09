@@ -52,7 +52,7 @@ public class PageNaviAction extends ActionSupport implements ServletResponseAwar
 			PageBean pb = new PageBean();
 			
 			// owner
-			if (publisher != null && user.getId() == publisher.getUid()) {
+			if (publisher != null && user != null && user.getId() == publisher.getUid()) {
 				pb = gService.getGoodPageList(pid, pageSize, currentPage, 2, 2, 2, 0, dateOrder);
 			}
 			// visitor
