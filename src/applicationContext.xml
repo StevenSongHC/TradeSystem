@@ -247,4 +247,17 @@
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
     </bean>
+    <bean id="buyGoodAction" scope="prototype" class="com.ts.action.user.BuyGoodAction">
+    	<property name="uService" ref="userService"/>
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    	<property name="oService" ref="orderService"/>
+    	<property name="mService" ref="messageService"/>
+    </bean>
+    <bean id="getOrderListAction" scope="prototype" class="com.ts.action.user.GetOrderListAction">
+    	<property name="uService" ref="userService"/>
+    	<property name="oService" ref="orderService"/>
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    </bean>
 </beans>

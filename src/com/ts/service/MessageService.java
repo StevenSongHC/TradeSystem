@@ -6,6 +6,8 @@ import com.ts.entity.Message;
 
 public interface MessageService {
 	
+	public boolean sendMessage(Message message);
+	
 	// send to the admin
 	public boolean sendBecomePublisherApply(int uid);
 	

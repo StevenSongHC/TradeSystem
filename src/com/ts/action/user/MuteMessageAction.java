@@ -20,7 +20,6 @@ public class MuteMessageAction extends ActionSupport {
 	
 	public String execute() throws Exception {
 		User user = uService.getCurrentUser();
-		System.out.println("hereaa");
 		if (user == null || !mService.readMessage(mid, user.getId(), noticeType))
 			json = "{flag:false}";
 		else

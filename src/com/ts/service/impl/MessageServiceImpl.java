@@ -33,6 +33,10 @@ public class MessageServiceImpl implements MessageService {
 	 * 5 = become publisher apply sent notice
 	 */
 	
+	public boolean sendMessage(Message message) {
+		return messageDao.sendMessage(message);
+	}
+	
 	public boolean sendBecomePublisherApply(int uid) {
 		Message msg = new Message();
 		msg.setSenderUid(uid);

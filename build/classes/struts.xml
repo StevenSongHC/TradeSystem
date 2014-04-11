@@ -90,5 +90,15 @@
 				<param name="root">json</param>
 			</result>
 		</action>
+		<action name="buyGood" class="buyGoodAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="getOrderList" class="getOrderListAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
 	</package>
 </struts>

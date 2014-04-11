@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${USER_SESSION.name} 的消息列表</title>
 <link rel="stylesheet" type="text/css" href="css/list_message.css">
-<script type="text/javascript"	src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript"	src="/TradeSystem/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -19,7 +19,7 @@
 			url: "muteMessage",
 			data: { mid: mid, noticeType: noticeType },
 			dataType: "json"
-		}).done(function( json ) {alert("done");
+		}).done(function( json ) {
 			var data = eval("("+json+")");
 			if (data.flag)
 				location.reload();
@@ -40,6 +40,9 @@
 	<s:iterator value="#request.unreadList" id="msg">
 		<s:if test="noticeType==0">
 			<div class="new-message">${senderName}:${word} -- ${time}<button onclick="muteMessage(${mid},${noticeType})">read</button></div>
+		</s:if>
+		<s:if test="noticeType==1">
+			<div class="order-give">${word} -- ${time}<button onclick="muteMessage(${mid},${noticeType})">read</button></div>
 		</s:if>
 		<s:if test="noticeType==5">
 			<div class="new-publisher-apply">${senderName} ${word} -- ${time} <a href="upgradePublisher?upgrade=true&uid=${senderUid}">agree</a> <a href="upgradePublisher?upgrade=false&uid=${senderUid}">refuse</a></div>

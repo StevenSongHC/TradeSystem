@@ -77,7 +77,8 @@ public class UserDAOImpl implements UserDAO {
 	public User getUserByAccount(String account) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Query query = session.createQuery("from User user where user.account='" + account + "'");
+		// prevent SQL injection
+		Query query = session.createQuery("from User user where user.account=?").setString(0, account);
 		session.getTransaction().commit();
 		return (User) query.uniqueResult();
 	}

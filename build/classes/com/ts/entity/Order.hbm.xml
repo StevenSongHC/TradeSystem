@@ -20,9 +20,6 @@
         <property name="addTime" type="timestamp">
             <column name="o_add_time" />
         </property>
-        <property name="finishTime" type="timestamp">
-            <column name="o_finish_time" />
-        </property>
         <property name="isDone" column="o_isDone" type="org.hibernate.type.NumericBooleanType" />
         <property name="isCancel" column="o_isCancel" type="org.hibernate.type.NumericBooleanType" />
     </class>
