@@ -9,4 +9,5 @@ public interface OrderService {
 	public boolean newOrder(Order order);
 	
 	public List<Order> fetchUserAllOrderList(int uid);
+	
 }

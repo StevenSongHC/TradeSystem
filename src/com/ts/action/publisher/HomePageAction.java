@@ -37,7 +37,7 @@ public class HomePageAction extends ActionSupport implements RequestAware,Servle
 		User user = uService.getCurrentUser();
 		// NULL, such publisher doesn't existed
 		if (publisher == null)
-			return "null";
+			return NONE;
 		
 		requestMap.put("publisher", publisher);
 		

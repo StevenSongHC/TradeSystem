@@ -1,4 +1,9 @@
 @CHARSET "UTF-8";
+body {
+	margin: 0;
+	padding: 35px;
+	background-color: rgb(255, 255, 213);
+}
 .summary {
 	border: medium double black;
 	border-style: dotted;
@@ -9,4 +14,67 @@
 }
 .summary .default {
 	font-size: 12px;
+	color: #BDB9B9;
+}
+.update-profile {
+	margin-left: 20px;
+	font-size: 15px;
+	font-weight: normal;
+}
+.update-profile a {
+	text-decoration: none;
+	color: rgb(0, 0, 253);
+}
+.update-profile a:hover {
+	background-color: rgb(173, 218, 248);
+}
+.portrait img {
+	width: 100px;
+}
+#order-list {
+	width: 40%;
+	margin: auto;
+	margin-top: 30px;
+	background-color: rgb(243, 255, 240);
+}
+#order-list .header {
+	padding: 9px;
+	font-size: 16px;
+	color: rgb(158, 154, 154);
+}
+#order-list .empty {
+	margin: 5px;
+	font-size: 10px;
+}
+#order-list .content {
+	border: 1px solid rgb(231, 212, 212);
+}
+#order-list .content img {
+	width: 40%;
+	float: left;
+	margin: 10px 30px 10px 10px;;
+}
+#order-list .content div {
+	margin: 7px;
+}
+#order-list .content .good-title a {
+	text-decoration: none;
+	color: rgb(82, 82, 82);
+}
+#order-list .content .good-title a:hover {
+	background-color: rgb(145, 145, 145);
+}
+#order-list .content .publisher-name a {
+	text-decoration: none;
+	color: rgb(82, 82, 82);
+	font-size: 13px;
+}
+#order-list .content .publisher-name a:hover {
+	background-color: rgb(190, 236, 115);
+}
+#order-list .content .good-price {
+	cursor: default;
+}
+#order-list .content .time {
+	cursor: default;
 }

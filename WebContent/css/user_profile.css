@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+.pic-panel {
+	padding: 10px;
+	margin: 10px;
+}
+.pic-panel img {
+	width: 130px;
+}
+.pic-panel .upload-status {
+	font-size: 13px;
+	color: rgb(124, 117, 117);
+}
+#name {
+	font-size: 40px;
+	font-seight: bold;
+	margin: 20px;
+}
+#summary {
+	width: 300px;
+	height: 100px;
+	display: block;
+}

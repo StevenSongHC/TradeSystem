@@ -51,4 +51,8 @@ public class UserServiceImpl implements UserService {
 				.getAttribute(com.ts.action.user.LoginAction.USER_SESSION);
 	}
 	
+	public boolean updateUser(User user) {
+		return userDao.updateUser(user);
+	}
+	
 }

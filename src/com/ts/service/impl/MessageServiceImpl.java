@@ -27,10 +27,9 @@ public class MessageServiceImpl implements MessageService {
 	 * noticeType:
 	 * 0 = u2u message
 	 * 1 = get a new order notice
-	 * 2 = order canceled notice
-	 * 3 = good suspended notice
-	 * 4 = good deleted notice
-	 * 5 = become publisher apply sent notice
+	 * 2 = good suspended notice
+	 * 3 = good deleted notice
+	 * 4 = become publisher apply sent notice
 	 */
 	
 	public boolean sendMessage(Message message) {
@@ -42,16 +41,16 @@ public class MessageServiceImpl implements MessageService {
 		msg.setSenderUid(uid);
 		msg.setReceiverUid(publisherDao.getAdmin().getUid());
 		msg.setWord("try to be a publisher");
-		msg.setNoticeType(5);
+		msg.setNoticeType(4);
 		return messageDao.sendMessage(msg);
 	}
 	
 	public boolean replyBecomePublisherApply(int uid, boolean isAgree) {
 		// set message read
-		if (messageDao.setMessageRead(0, 0, uid, 5)) {
+		if (messageDao.setMessageRead(0, 0, uid, 4)) {
 			// update admin's notification
 			int adminUid = publisherDao.getAdmin().getUid();
-			if (messageDao.minusNotification(adminUid, 5)) {
+			if (messageDao.minusNotification(adminUid, 4)) {
 				// send sender a message about the result of become-publisher apply
 				Message msg = new Message();
 				if (isAgree) {
@@ -80,7 +79,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	public boolean haveSentUnreadBecomePublisherApply(int uid) {
-		return messageDao.haveSentUnreadMessage(uid, 5);
+		return messageDao.haveSentUnreadMessage(uid, 4);
 	}
 	
 	public int getNotificationAmount(int uid) {

@@ -15,7 +15,6 @@ import com.ts.entity.Message;
 public class MessageDAOImpl implements MessageDAO {
 	private final String[] COLUMN = {"new_message",
 							  		 "order_give",
-							  		 "order_cancel",
 							  		 "good_suspended",
 							  		 "good_deleted",
 							  		 "new_publisher_apply"};
@@ -29,7 +28,7 @@ public class MessageDAOImpl implements MessageDAO {
 	
 	public int getNotificationAmount(int uid) {
 		Session session = sessionFactory.openSession();
-		Query query = session.createSQLQuery("SELECT new_message+order_give+order_cancel+" +
+		Query query = session.createSQLQuery("SELECT new_message+order_give+" +
 											 "good_suspended+good_deleted+" +
 											 "new_publisher_apply AS amount " + 
 											 "FROM notification WHERE uid=" + uid)
@@ -44,10 +43,10 @@ public class MessageDAOImpl implements MessageDAO {
 	
 	public String[] getNotification(int uid) {
 		Session session = sessionFactory.openSession();
-		Query query = session.createSQLQuery("SELECT new_message AS '0',order_give AS '1',order_cancel AS '2'," + 
-											 "good_suspended AS '3',good_deleted AS '4',new_publisher_apply AS '5' " + 
+		Query query = session.createSQLQuery("SELECT new_message AS '0',order_give AS '1'," + 
+											 "good_suspended AS '2',good_deleted AS '3',new_publisher_apply AS '4' " + 
 											 "FROM notification WHERE uid=" + uid + 
-											 " AND (new_message>0 OR order_give>0 OR order_cancel>0 OR " +
+											 " AND (new_message>0 OR order_give>0 OR " +
 											 "good_suspended>0 OR good_deleted>0 OR new_publisher_apply>0)")
 										.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		// got notification

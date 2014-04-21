@@ -32,7 +32,7 @@ public class SaveGoodAction extends ActionSupport {
 			Good good = gService.getGoodById(gid);
 			good.setTitle(title);
 			good.setPrice(price);
-			good.setDesc(desc);System.out.println(pic);
+			good.setDesc(desc);
 			// new pic updated
 			if (!pic.equals(good.getPic())) {
 				// not the default pic

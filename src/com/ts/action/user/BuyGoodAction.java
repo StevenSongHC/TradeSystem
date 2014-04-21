@@ -43,7 +43,6 @@ public class BuyGoodAction extends ActionSupport {
 			order.setBuyerId(user.getId());
 			order.setGoodId(gid);
 			order.setSellerId(publisher.getUid());
-			order.setIsDone(true);
 			// send message
 			Message message = new Message();
 			message.setSenderUid(user.getId());

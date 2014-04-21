@@ -10,4 +10,6 @@ public interface UserDAO {
 	
 	public User getUserByAccount(String account);
 	
+	public boolean updateUser(User user);
+	
 }

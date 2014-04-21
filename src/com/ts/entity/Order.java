@@ -8,8 +8,6 @@ public class Order {
 	private int sellerId;
 	private int buyerId;
 	private Timestamp addTime;
-	private boolean isDone;
-	private boolean isCancel;
 	public int getId() {
 		return id;
 	}
@@ -39,17 +37,5 @@ public class Order {
 	}
 	public void setAddTime(Timestamp addTime) {
 		this.addTime = addTime;
-	}
-	public boolean getIsDone() {
-		return isDone;
-	}
-	public void setIsDone(boolean isDone) {
-		this.isDone = isDone;
-	}
-	public boolean getIsCancel() {
-		return isCancel;
-	}
-	public void setIsCancel(boolean isCancel) {
-		this.isCancel = isCancel;
 	}
 }

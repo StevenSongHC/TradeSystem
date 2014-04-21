@@ -87,10 +87,14 @@ function loadOrderList() {
 		data: { type : "all" },
 		dataType: "json"
 	}).done(function( json ) {
-		data = eval("("+json+")");
-		$.each(data, function(i, item) {
-			$("#my-order").append("<div class=\"content\"><img src=\"<%=basepath%>/"+item.goodPic+"\" /><span class=\"title\"><a href=\"<%=basepath%>/g/"+item.goodId+"\">"+item.goodTitle+"</a></span><span class=\"publisher-info\"><a href=\"<%=basepath%>/p/"+item.publisherPid+"\">"+item.publisherName+"</a></span><span class=\"g-price\">"+item.goodPrice+" RMB</span><span class=\"time\">"+item.time+"</span><span class=\"oid\">OID: "+item.orderId+"</span>");
-		});
+		if (json == "[]")
+			$("#my-order").append("<div class=\"content\" style=\"font-size: 10px;\">无历史记录</div>");
+		else {
+			data = eval("("+json+")");
+			$.each(data, function(i, item) {
+				$("#my-order").append("<div class=\"content\"><img src=\"<%=basepath%>/"+item.goodPic+"\" /><span class=\"title\"><a href=\"<%=basepath%>/g/"+item.goodId+"\">"+item.goodTitle+"</a></span><span class=\"publisher-info\"><a href=\"<%=basepath%>/p/"+item.publisherPid+"\">"+item.publisherName+"</a></span><span class=\"g-price\">"+item.goodPrice+" RMB</span><span class=\"time\">"+item.time+"</span><span class=\"oid\">OID: "+item.orderId+"</span>");
+			});
+		}
 	}).fail(function() {
 		alert("FAIL");
 	}).error(function (XMLHttpRequest, textStatus, errorThrown) {

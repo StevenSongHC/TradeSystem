@@ -83,4 +83,24 @@ public class UserDAOImpl implements UserDAO {
 		return (User) query.uniqueResult();
 	}
 	
+	public boolean updateUser(User user) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		try {
+			session.update(user);
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				System.out.println("0: fail to update user info!");
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
 }

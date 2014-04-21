@@ -36,6 +36,7 @@
         <action name="publisherHomepage" class="publisherHomepageAction">
         	<result name="host">publisher-homepage-host.jsp</result>
         	<result name="guest">publisher-homepage-guest.jsp</result>
+        	<result name="none">/error-404.jsp</result>
         </action>
         <action name="addGood" class="addGoodAction">
             <result name="input">/add-good.jsp</result>
@@ -52,6 +53,10 @@
         	<result name="success" type="redirect">homepage</result>
         	<result name="login">/action-denied.jsp</result>
         	<result name="error">/error-404.jsp</result>
+        </action>
+        <action name="updateProfile" class="updateProfileAction">
+            <result name="login">/error-404.jsp</result>
+        	<result name="input">/user-profile.jsp</result>
         </action>
     </package>
     <package name="ajax" extends="json-default">
@@ -71,6 +76,11 @@
 			</result>
 		</action>
 		<action name="muteMessage" class="muteMessageAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="upload" class="uploadAction">
 			<result name="map" type="json">
 				<param name="root">json</param>
 			</result>
@@ -100,5 +110,10 @@
 				<param name="root">json</param>
 			</result>
 		</action>
+        <action name="doUpdateProfile" class="doUpdateProfileAction">
+            <result name="map" type="json">
+                <param name="root">json</param>
+            </result>
+        </action>
 	</package>
 </struts>

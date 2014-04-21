@@ -191,6 +191,9 @@
     <bean id="logoutAction" scope="prototype" class="com.ts.action.user.LogoutAction" />
     <bean id="homepageAction" scope="prototype" class="com.ts.action.user.HomePageAction">
         <property name="uService" ref="userService"/>
+        <property name="oService" ref="orderService"/>
+        <property name="pService" ref="publisherService"/>
+        <property name="gService" ref="goodService"/>
     </bean>
     <bean id="becomePublisherAction" scope="prototype" class="com.ts.action.user.BecomePublisherAction">
         <property name="uService" ref="userService"/>
@@ -238,6 +241,9 @@
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
     </bean>
+    <bean id="uploadAction" scope="prototype" class="com.ts.action.user.UploadFileAction">
+    	<property name="uService" ref="userService"/>
+    </bean>
     <bean id="publisherUploadAction" scope="prototype" class="com.ts.action.publisher.UploadFileAction">
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
@@ -259,5 +265,11 @@
     	<property name="oService" ref="orderService"/>
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
+    </bean>
+    <bean id="updateProfileAction" scope="prototype" class="com.ts.action.user.UpdateProfileAction">
+    	<property name="uService" ref="userService"/>
+    </bean>
+    <bean id="doUpdateProfileAction" scope="prototype" class="com.ts.action.user.DoUpdateProfileAction">
+    	<property name="uService" ref="userService"/>
     </bean>
 </beans>

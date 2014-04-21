@@ -29,5 +29,7 @@ public interface UserService {
 	public int login(String account, String password);
 	
 	public User getCurrentUser();
+	
+	public boolean updateUser(User user);
 
 }
