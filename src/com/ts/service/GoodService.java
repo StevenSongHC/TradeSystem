@@ -1,5 +1,7 @@
 package com.ts.service;
 
+import java.util.List;
+
 import com.ts.bean.PageBean;
 import com.ts.entity.Good;
 
@@ -26,5 +28,7 @@ public interface GoodService {
 	 */
 	public PageBean getGoodPageList(final int pid, final int pageSize, final int currentPage, 
 									final int isComplete, final int isAgreed, final int isAvailable, final int isDeleted, final int dateOrder);
+	
+	public List<Good> searchGoodByTitle(String title, int maxResult);
 	
 }

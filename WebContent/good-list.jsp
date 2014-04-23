@@ -76,7 +76,9 @@ function registerInteractiveAction() {
 <h1>${publisher.name}</h1>
 <div class="summary">${publisher.summary}</div>
 <div class="good-list">
+	<s:if test="#session.PUBLISHER_SESSION.id==#request.publisher.id">
 	<span class="add-good"><a href="addGood">添加商品</a></span>
+	</s:if>
 	<span class="func-bar">
 		<span>每页显示记录数
 		<select id="page-size">

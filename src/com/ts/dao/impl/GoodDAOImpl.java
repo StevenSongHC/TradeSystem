@@ -78,4 +78,13 @@ public class GoodDAOImpl implements GoodDAO {
 		return query.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Good> search(String keyword, String column, int maxResult) {
+		Query query = sessionFactory.openSession().createQuery("From Good good where good." + column + " like ? and good.isComplete=true and good.isAgree=true and good.isAvailable=true")
+															  .setString(0, "%" + keyword + "%");
+		if (maxResult != 0)
+			query.setMaxResults(maxResult);
+		return query.list();
+	}
+	
 }

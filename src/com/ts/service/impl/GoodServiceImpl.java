@@ -1,5 +1,7 @@
 package com.ts.service.impl;
 
+import java.util.List;
+
 import com.ts.bean.PageBean;
 import com.ts.dao.GoodDAO;
 import com.ts.entity.Good;
@@ -80,6 +82,10 @@ public class GoodServiceImpl implements GoodService {
 		pb.setResult(goodDao.queryPage(pb.countOffset(pageSize, currentPage), pageSize, condition.toString()));
 		pb.setNaviBar(PageUtil.drawNavi(pb.getCurrentPage(), pb.getTotalPage()));
 		return pb;
+	}
+	
+	public List<Good> searchGoodByTitle(String title, int maxResult) {
+		return goodDao.search(title, "title", maxResult);
 	}
 	
 }

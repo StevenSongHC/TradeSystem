@@ -16,4 +16,6 @@ public interface GoodDAO {
 	
 	public List<Good> queryPage(final int offset, final int pageSize, final String condition);
 	
+	public List<Good> search(String keyword, String column, int maxResult);
+	
 }

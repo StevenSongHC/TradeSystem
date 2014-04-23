@@ -58,6 +58,9 @@
             <result name="login">/error-404.jsp</result>
         	<result name="input">/user-profile.jsp</result>
         </action>
+        <action name="search" class="searchAction">
+            <result name="success">/search-result-page.jsp</result>
+        </action>
     </package>
     <package name="ajax" extends="json-default">
         <action name="login" class="loginAction">
@@ -111,6 +114,11 @@
 			</result>
 		</action>
         <action name="doUpdateProfile" class="doUpdateProfileAction">
+            <result name="map" type="json">
+                <param name="root">json</param>
+            </result>
+        </action>
+        <action name="searchSuggestion" class="searchSuggestionAction">
             <result name="map" type="json">
                 <param name="root">json</param>
             </result>

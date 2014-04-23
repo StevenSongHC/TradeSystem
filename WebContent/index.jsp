@@ -11,7 +11,7 @@
 <jsp:include page="user-info-box.jsp" />
 <body>
 校园小商品交易系统<a href="data">data</a>
-
+<jsp:include page="search-box.jsp" />
 <jsp:include page="footer.jsp" />
 </body>
 </html>
