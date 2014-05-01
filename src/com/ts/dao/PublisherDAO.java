@@ -18,4 +18,6 @@ public interface PublisherDAO {
 	
 	public Publisher getPublisherByPid(int pid);
 	
+	public boolean updatePublisher(Publisher publisher);
+	
 }

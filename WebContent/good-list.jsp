@@ -4,7 +4,7 @@
 <% 
 String basepath = request.getContextPath();
 %>
-<link rel="stylesheet" type="text/css" href="/TradeSystem/css/publisher_homepage.css">
+<link rel="stylesheet" type="text/css" href="/TradeSystem/css/good_list.css">
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -33,7 +33,7 @@ function getPage(currentPage) {
 		$(".page-navi").html(data.pageNavi);
 		$("#good-item").html("");
 		$.each(data.content, function(i, item) {
-			$("#good-item").append("<hr><div class='item'><div class='title'><a href='<%=basepath%>/g/" + item.id + "'>" + item.title + "</a></div><div class='price'>" + item.price + "<span class='currency'>RMB</span></div><div class='pic'><img src='<%=basepath%>/" + item.pic + "' /></div><div class='desc'>" + item.desc + "</div><div class='date'>" + item.addTime.date + "</div><div style='clear: both'></div></div>");
+			$("#good-item").append("<hr><div class='item'><div class='title'><a href='<%=basepath%>/g/" + item.id + "'>" + item.title + "</a><span class='buyer-count'>(" + item.buyerCount + ")</span></div><div class='price'>" + item.price + "<span class='currency'>RMB</span></div><div class='pic'><img src='<%=basepath%>/" + item.pic + "' /></div><div class='desc'>" + item.desc + "</div><div class='date'>" + item.addTime.date + "</div><div style='clear: both'></div></div>");
 		});
 		
 		registerInteractiveAction();
@@ -72,9 +72,6 @@ function registerInteractiveAction() {
 	});
 }
 </script>
-
-<h1>${publisher.name}</h1>
-<div class="summary">${publisher.summary}</div>
 <div class="good-list">
 	<s:if test="#session.PUBLISHER_SESSION.id==#request.publisher.id">
 	<span class="add-good"><a href="addGood">添加商品</a></span>
@@ -106,7 +103,7 @@ function registerInteractiveAction() {
 	<s:iterator value="#request.pageNavi.result" id="good">
 	<hr>
 	<div class="item">
-		<div class="title"><a href="<%=basepath%>/g/${good.id}">${good.title}</a></div>
+		<div class="title"><a href="<%=basepath%>/g/${good.id}" target="_blank">${good.title}</a><span class="buyer-count">(${good.buyerCount})</span></div>
 		<div class="price">${good.price}<span class="currency">RMB</span></div>
 		<div class="pic"><img src="<%=basepath%>/${good.pic}" /></div>
 		<div class="desc">${good.desc}</div>

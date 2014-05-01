@@ -52,4 +52,8 @@ public class PublisherServiceImpl implements PublisherService {
 		return getCurrentPublisher().getUid() == getAdminUid();
 	}
 	
+	public boolean updatePublisher(Publisher publisher) {
+		return publisherDao.updatePublisher(publisher);
+	}
+	
 }

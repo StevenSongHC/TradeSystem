@@ -272,6 +272,9 @@
     <bean id="doUpdateProfileAction" scope="prototype" class="com.ts.action.user.DoUpdateProfileAction">
     	<property name="uService" ref="userService"/>
     </bean>
+    <bean id="updatePublisherInfoAction" scope="prototype" class="com.ts.action.publisher.UpdateInfoAction">
+    	<property name="pService" ref="publisherService"/>
+    </bean>
     <bean id="searchSuggestionAction" scope="prototype" class="com.ts.action.user.SearchSuggestionAction">
     	<property name="gService" ref="goodService"/>
     </bean>

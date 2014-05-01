@@ -34,4 +34,6 @@ public interface PublisherService {
 	
 	public boolean isAdmin();
 	
+	public boolean updatePublisher(Publisher publisher);
+	
 }

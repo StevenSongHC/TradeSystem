@@ -129,4 +129,24 @@ public class PublisherDAOImpl implements PublisherDAO {
 		return (Publisher) query.uniqueResult();
 	}
 
+	public boolean updatePublisher(Publisher publisher) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		try {
+			session.update(publisher);
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				System.out.println("0: fail to update publisher info!");
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
 }
