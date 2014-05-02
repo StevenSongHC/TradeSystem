@@ -1,5 +1,6 @@
 package com.ts.service;
 
+import com.ts.bean.PageBean;
 import com.ts.entity.User;
 
 public interface UserService {
@@ -31,5 +32,9 @@ public interface UserService {
 	public User getCurrentUser();
 	
 	public boolean updateUser(User user);
+	
+	/*public PageBean getUserPageList(final int pageSize, final int currentPage,
+									final int isSuspend, final int isDelete, final int isRestricted, final int isPublisher);*/
+	public PageBean getUserPageList(final int pageSize, final int currentPage, final String conditions[][], final String sort[]);
 
 }

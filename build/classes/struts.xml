@@ -60,6 +60,10 @@
         <action name="search" class="searchAction">
             <result name="success">/search-result-page.jsp</result>
         </action>
+        
+        <action name="admin" class="adminAction">
+            <result name="success">/admin-page.jsp</result>
+        </action>
     </package>
     <package name="ajax" extends="json-default">
         <action name="login" class="loginAction">
@@ -98,6 +102,11 @@
 			</result>
 		</action>
 		<action name="getPage" class="pageNaviAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="queryPage" class="queryPageAction">
 			<result name="map" type="json">
 				<param name="root">json</param>
 			</result>

@@ -36,6 +36,7 @@ public class AddGoodAction extends ActionSupport {
 			good.setPic(pic);
 			good.setPrice(price);
 			good.setDesc(desc);
+			good.setIsAgree(true);
 			good.setPublisherId(publisher.getId());
 			if (gService.addGood(good)) {
 				gid = good.getId();

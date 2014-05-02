@@ -55,7 +55,8 @@ public class PublishGoodAction extends ActionSupport {
 		// from editGood page
 		else {
 			good.setId(gid);
-			isSuccess = gService.updateGood(good);
+			if (publisher.getIsActivate() && !publisher.getIsRestricted() && !good.getIsDelete() && pService.publishGood(publisher.getId()) && gService.updateGood(good))
+				isSuccess = true;
 		}
 		
 		if (isSuccess)

@@ -253,6 +253,11 @@
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
     </bean>
+    <bean id="queryPageAction" scope="prototype" class="com.ts.action.admin.QueryPageAction">
+    	<property name="uService" ref="userService"/>
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    </bean>
     <bean id="buyGoodAction" scope="prototype" class="com.ts.action.user.BuyGoodAction">
     	<property name="uService" ref="userService"/>
     	<property name="pService" ref="publisherService"/>
@@ -279,6 +284,11 @@
     	<property name="gService" ref="goodService"/>
     </bean>
     <bean id="searchAction" scope="prototype" class="com.ts.action.user.SearchAction">
+    	<property name="gService" ref="goodService"/>
+    </bean>
+    <bean id="adminAction" scope="prototype" class="com.ts.action.admin.GetAllDataAction">
+        <property name="uService" ref="userService"/>
+        <property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
     </bean>
 </beans>

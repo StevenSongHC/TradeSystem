@@ -1,5 +1,6 @@
 package com.ts.service;
 
+import com.ts.bean.PageBean;
 import com.ts.entity.Publisher;
 
 public interface PublisherService {
@@ -35,5 +36,9 @@ public interface PublisherService {
 	public boolean isAdmin();
 	
 	public boolean updatePublisher(Publisher publisher);
+	
+	public boolean publishGood(int pid);	// validate auths and account status requires
+	
+	public PageBean getPublisherPageList(final int pageSize, final int currentPage, final String conditions[][], final String sort[]);
 	
 }

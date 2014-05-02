@@ -53,11 +53,11 @@ public class PageNaviAction extends ActionSupport implements ServletResponseAwar
 			
 			// owner
 			if (publisher != null && user != null && user.getId() == publisher.getUid()) {
-				pb = gService.getGoodPageList(pid, pageSize, currentPage, 2, 2, 2, 0, dateOrder);
+				pb = gService.getPublisherGoodPageList(pid, pageSize, currentPage, 2, 2, 2, 0, dateOrder);
 			}
 			// visitor
 			else {
-				pb = gService.getGoodPageList(pid, pageSize, currentPage, 1, 1, 1, 0, dateOrder);
+				pb = gService.getPublisherGoodPageList(pid, pageSize, currentPage, 1, 1, 1, 0, dateOrder);
 			}
 			
 			map.put("pageSizeValue", pageSize);

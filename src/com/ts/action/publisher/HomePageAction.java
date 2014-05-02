@@ -61,13 +61,13 @@ public class HomePageAction extends ActionSupport implements RequestAware,Servle
 		// return the first page record
 		// anonymous visitor
 		if (user == null)
-			requestMap.put("pageNavi", gService.getGoodPageList(pid, pageSize, 1, 1, 1, 1, 0, dateOrder));
+			requestMap.put("pageNavi", gService.getPublisherGoodPageList(pid, pageSize, 1, 1, 1, 1, 0, dateOrder));
 		// owner
 		else if (user.getId() == publisher.getUid())
-			requestMap.put("pageNavi", gService.getGoodPageList(pid, pageSize, 1, 2, 2, 2, 0, dateOrder));
+			requestMap.put("pageNavi", gService.getPublisherGoodPageList(pid, pageSize, 1, 2, 2, 2, 0, dateOrder));
 		// visitor
 		else
-			requestMap.put("pageNavi", gService.getGoodPageList(pid, pageSize, 1, 1, 1, 1, 0, dateOrder));
+			requestMap.put("pageNavi", gService.getPublisherGoodPageList(pid, pageSize, 1, 1, 1, 1, 0, dateOrder));
 		
 		return SUCCESS;
 	}

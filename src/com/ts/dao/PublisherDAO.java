@@ -1,5 +1,7 @@
 package com.ts.dao;
 
+import java.util.List;
+
 import com.ts.entity.Publisher;
 
 public interface PublisherDAO {
@@ -19,5 +21,11 @@ public interface PublisherDAO {
 	public Publisher getPublisherByPid(int pid);
 	
 	public boolean updatePublisher(Publisher publisher);
+	
+	public boolean publishGood(int pid);
+	
+	public int getAllRow(String condition);
+	
+	public List<Publisher> queryPage(final int offset, final int pageSize, final String condition);
 	
 }

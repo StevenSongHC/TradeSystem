@@ -26,9 +26,11 @@ public interface GoodService {
 	 * @param isDeleted
 	 * @return List<Good>
 	 */
-	public PageBean getGoodPageList(final int pid, final int pageSize, final int currentPage, 
+	public PageBean getPublisherGoodPageList(final int pid, final int pageSize, final int currentPage, 
 									final int isComplete, final int isAgreed, final int isAvailable, final int isDeleted, final int dateOrder);
 	
 	public List<Good> searchGoodByTitle(String title, int maxResult);
+	
+	public PageBean getGoodPageList(final int pageSize, final int currentPage, final String conditions[][], final String sort[]);
 	
 }

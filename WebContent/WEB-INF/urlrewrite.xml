@@ -28,6 +28,10 @@
         <from>/g/([0-9]+)</from>
         <to>/editGood?gid=$1</to>
     </rule>
+    <rule>
+        <from>/asd</from>
+        <to>/admin</to>
+    </rule>
     
     <rule>
     	<from>/products/([0-9]+)/([0-9]+).html</from>

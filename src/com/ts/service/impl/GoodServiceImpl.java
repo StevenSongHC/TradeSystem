@@ -29,7 +29,7 @@ public class GoodServiceImpl implements GoodService {
 		return goodDao.getGoodById(gid);
 	}
 	
-	public PageBean getGoodPageList(int pid, int pageSize, int currentPage, 
+	public PageBean getPublisherGoodPageList(int pid, int pageSize, int currentPage, 
 									int isComplete, int isAgreed, int isAvailable, int isDeleted, int dateOrder) {
 		
 		// query condition(s)
@@ -71,10 +71,10 @@ public class GoodServiceImpl implements GoodService {
 		pb.setPageSize(pageSize);
 		pb.setAllRow(goodDao.getAllRow(condition.toString()));
 
-		// order by ascending add-time
+		// order by descending add-time
 		if (dateOrder == -1)
 			condition.append(" order by g.addTime desc");
-		// order by descending add-time, DEFAULT
+		// order by ascending add-time, DEFAULT
 		else if (dateOrder == 1)
 			condition.append(" order by g.addTime asc");
 		
@@ -86,6 +86,47 @@ public class GoodServiceImpl implements GoodService {
 	
 	public List<Good> searchGoodByTitle(String title, int maxResult) {
 		return goodDao.search(title, "title", maxResult);
+	}
+	
+	public PageBean getGoodPageList(final int pageSize, final int currentPage, final String conditions[][], final String sort[]) {
+		boolean flag = false;
+		boolean isMulti = false;
+		final String SORT[] = {"desc", "asc"};		// 0 = descending, 1 = ascending
+		StringBuilder condition = new StringBuilder();
+		
+		// iter every conditions' value
+		int index = 0;
+		while (index < conditions[1].length) {
+			if (!conditions[1][index].equals("2")) {
+				// add the syntax of " where"
+				if (!flag) {
+					condition.append(" where");
+					flag = true;
+				}
+				// add the multi-condition query syntax
+				if (isMulti)
+					condition.append(" and");
+				condition.append(" g." + conditions[0][index] + "=" + conditions[1][index]);
+				isMulti = true;
+			}
+			index++;
+		}
+		
+		PageBean pb = new PageBean();
+		pb.setCurrentPage(currentPage);
+		pb.setPageSize(pageSize);
+		pb.setAllRow(goodDao.getAllRow(condition.toString()));
+		
+		// iter data sort solution
+		condition.append(" order by g." + sort[0] + " " + SORT[Integer.parseInt(sort[1])]);
+		
+		pb.setTotalPage(pb.countTotalPage(pageSize, pb.getAllRow()));
+		pb.setResult(goodDao.queryPage(pb.countOffset(pageSize, currentPage), pageSize, condition.toString()));
+		for (Good good : goodDao.queryPage(pb.countOffset(pageSize, currentPage), pageSize, condition.toString())) {
+			System.out.println("#"+good.getId()+" - "+good.getTitle());
+		}
+		pb.setNaviBar(PageUtil.drawNavi(pb.getCurrentPage(), pb.getTotalPage()));
+		return pb;
 	}
 	
 }

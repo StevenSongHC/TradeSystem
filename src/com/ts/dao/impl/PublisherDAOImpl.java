@@ -1,5 +1,7 @@
 package com.ts.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -147,6 +149,46 @@ public class PublisherDAOImpl implements PublisherDAO {
 			session.close();
 		}
 		return true;
+	}
+	
+	/**
+	 * update p_good_count column
+	 * p_good_count++
+	 */
+	public boolean publishGood(int pid) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		try {
+			session.createSQLQuery("UPDATE publisher set p_good_count=p_good_count+1 WHERE pid=" + pid).executeUpdate();
+			session.flush();
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				System.out.println("0: fail to update publisher info!");
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
+	public int getAllRow(String condition) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("select count(*) from Publisher p" + condition);
+		return Integer.parseInt(query.list().get(0).toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Publisher> queryPage(final int offset, final int pageSize, final String condition) {
+		Query query = sessionFactory.openSession().createQuery("from Publisher p" + condition);
+		query.setFirstResult(offset);
+		query.setMaxResults(pageSize);
+		return query.list();
 	}
 	
 }

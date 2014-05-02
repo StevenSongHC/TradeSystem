@@ -1,5 +1,7 @@
 package com.ts.dao;
 
+import java.util.List;
+
 import com.ts.entity.User;
 
 public interface UserDAO {
@@ -11,5 +13,9 @@ public interface UserDAO {
 	public User getUserByAccount(String account);
 	
 	public boolean updateUser(User user);
+	
+	public int getAllRow(String condition);
+	
+	public List<User> queryPage(final int offset, final int pageSize, final String condition);
 	
 }

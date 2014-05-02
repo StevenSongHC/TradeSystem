@@ -1,5 +1,7 @@
 package com.ts.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -101,6 +103,21 @@ public class UserDAOImpl implements UserDAO {
 			session.close();
 		}
 		return true;
+	}
+	
+	public int getAllRow(String condition) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("select count(*) from User u" + condition);
+		return Integer.parseInt(query.list().get(0).toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> queryPage(final int offset, final int pageSize, final String condition) {
+		Query query = sessionFactory.openSession().createQuery("from User u" + condition);
+		query.setFirstResult(offset);
+		query.setMaxResults(pageSize);
+		return query.list();
 	}
 	
 }
