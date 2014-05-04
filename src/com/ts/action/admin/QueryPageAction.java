@@ -1,6 +1,9 @@
 package com.ts.action.admin;
 
+import net.sf.json.JSONObject;
+
 import com.opensymphony.xwork2.ActionSupport;
+import com.ts.bean.PageBean;
 import com.ts.service.GoodService;
 import com.ts.service.PublisherService;
 import com.ts.service.UserService;
@@ -19,14 +22,15 @@ public class QueryPageAction extends ActionSupport {
 	private String naviType;
 	private int pageSize;
 	private int currentPage;
-	private String filterArray;
-	private String sortArray;
+	private String userFilterArray;
+	private String userSortArray;
 	private String json;
 
 	public String execute() throws Exception {
+		PageBean pb = new PageBean();
 		if (currentPage == 0)
 			currentPage = 1;
-		System.out.println(naviType+"_"+pageSize+"_"+currentPage+"_"+filterArray+"_"+sortArray);
+		System.out.println(naviType+"_"+pageSize+"_"+currentPage+"_"+userFilterArray+"_"+userSortArray);
 		final String USER_COLUMN[] = {"isSuspend",
 									  "isDelete",
 									  "isRestricted",
@@ -43,7 +47,7 @@ public class QueryPageAction extends ActionSupport {
 		
 		
 		for (int i =0; i<userColumnArgs.length; i++) {
-			userColumnArgs[i] = Integer.parseInt(filterArray.split(",")[i]);
+			userColumnArgs[i] = Integer.parseInt(userFilterArray.split(",")[i]);
 		}
 		
 		String userColumnConditions[][] = new String[2][4];
@@ -55,9 +59,11 @@ public class QueryPageAction extends ActionSupport {
 		}
 		
 		
-		uService.getUserPageList(pageSize, currentPage, userColumnConditions, sortArray.split(","));
+		pb = uService.getUserPageList(pageSize, currentPage, userColumnConditions, userSortArray.split(","));
+		pb.setDataType("user");
 		
-		
+		json = JSONObject.fromObject(pb).toString();
+		System.out.println(json);
 		return "map";
 	}
 
@@ -97,17 +103,17 @@ public class QueryPageAction extends ActionSupport {
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
-	public String getFilterArray() {
-		return filterArray;
+	public String getUserFilterArray() {
+		return userFilterArray;
 	}
-	public void setFilterArray(String filterArray) {
-		this.filterArray = filterArray;
+	public void setUserFilterArray(String userFilterArray) {
+		this.userFilterArray = userFilterArray;
 	}
-	public String getSortArray() {
-		return sortArray;
+	public String getUserSortArray() {
+		return userSortArray;
 	}
-	public void setSortArray(String sortArray) {
-		this.sortArray = sortArray;
+	public void setUserSortArray(String userSortArray) {
+		this.userSortArray = userSortArray;
 	}
 	public String getJson() {
 		return json;

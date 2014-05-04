@@ -111,6 +111,11 @@
 				<param name="root">json</param>
 			</result>
 		</action>
+		<action name="toggleStatus" class="toggleStatusAction">
+			<result name="map" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
 		<action name="buyGood" class="buyGoodAction">
 			<result name="map" type="json">
 				<param name="root">json</param>

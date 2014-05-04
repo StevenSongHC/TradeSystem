@@ -15,6 +15,7 @@ public class PageBean {
 	private int currentPage;			// 当前第几页
 	
 	private String naviBar;				// 页面导航栏
+	private String dataType;			// 数据类型
 	
 	public List<?> getResult() {
 		return result;
@@ -51,6 +52,12 @@ public class PageBean {
 	}
 	public void setNaviBar(String naviBar) {
 		this.naviBar = naviBar;
+	}
+	public String getDataType() {
+		return dataType;
+	}
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 	
 	/**

@@ -18,4 +18,8 @@ public interface UserDAO {
 	
 	public List<User> queryPage(final int offset, final int pageSize, final String condition);
 	
+	public boolean checkAuth(int uid, String auth);
+	
+	public boolean modifyAuth(int uid, String auth, int val);
+	
 }

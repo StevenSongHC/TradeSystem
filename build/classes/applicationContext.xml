@@ -60,6 +60,8 @@
 				<prop key="hibernate.current_session_context_class">thread</prop>
 				<prop key="hibernate.connection.release_mode">after_transaction</prop>
 				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+				<prop key="hibernate.jdbc.batch_size">120</prop>
+				<prop key="hibernate.connection.pool_size">120</prop>
 				<prop key="hbm2ddl.auto">update</prop>
 				<prop key="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</prop>
 		    </props>
@@ -254,6 +256,11 @@
     	<property name="gService" ref="goodService"/>
     </bean>
     <bean id="queryPageAction" scope="prototype" class="com.ts.action.admin.QueryPageAction">
+    	<property name="uService" ref="userService"/>
+    	<property name="pService" ref="publisherService"/>
+    	<property name="gService" ref="goodService"/>
+    </bean>
+    <bean id="toggleStatusAction" scope="prototype" class="com.ts.action.admin.ToggleStatusAction">
     	<property name="uService" ref="userService"/>
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>

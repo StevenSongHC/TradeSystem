@@ -120,4 +120,31 @@ public class UserDAOImpl implements UserDAO {
 		return query.list();
 	}
 	
+	public boolean checkAuth(int uid, String auth) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query = session.createSQLQuery("SELECT " + auth + " FROM authority WHERE uid=" + uid);
+		return (Integer.parseInt(query.uniqueResult().toString()) == 1);
+	}
+	
+	public boolean modifyAuth(int uid, String auth, int val) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			session.createSQLQuery("UPDATE authority SET " + auth + "=" + val + " WHERE uid=" + uid).executeUpdate();
+			session.flush();
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null) {
+				System.out.println("change " + uid + "'s authority failed");
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
 }

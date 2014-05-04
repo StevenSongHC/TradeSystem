@@ -10,67 +10,28 @@ String basepath = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>C.C.S 管理界面</title>
 <link rel="stylesheet" type="text/css" href="/TradeSystem/css/good_list.css">
-<style type="text/css">
-h4 {
-	background-color: rgb(179, 184, 178);
-}
-.title {
-	margin-left: 10px;
-	font-size: 13px;
-	font-weight: normal;
-	background-color: rgb(211, 214, 210);
-}
-table {
-	text-align: center;
-}
-table img {
-	width: 50px;
-}
-table .status {
-	width: 70px;
-}
-.t {
-	background-color: rgb(243, 86, 86);
-	color: rgb(243, 86, 86);
-	cursor: pointer;
-}
-.f {
-	background-color: rgb(174, 255, 100);
-	color: rgb(174, 255, 100);
-	cursor: pointer;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="/TradeSystem/css/admin_page.css">
 <script type="text/javascript"	src="<%=basepath%>/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
+var userFilterArray = [2,2,2,2];		// filter-arg-array
 $(document).ready(function() {
-	$(".t").hover(function() {
-		$(this).css({"background-color" : "rgb(128, 250, 16)", "color" : "rgb(128, 250, 16)"});
-	}, function() {
-		$(this).css({"background-color" : "rgb(243, 86, 86)", "color" : "rgb(243, 86, 86)"});
-	});
-	$(".f").hover(function() {
-		$(this).css({"background-color" : "rgb(250, 25, 25)", "color" : "rgb(250, 25, 25)"});
-	}, function() {
-		$(this).css({"background-color" : "rgb(174, 255, 100)", "color" : "rgb(174, 255, 100)"});
-	});
-	
+	registerInteractiveAction();
 	
 	///////////////////////////////////////////////////////////////////////
 	/////////////////////////   query user list   /////////////////////////
 	///////////////////////////////////////////////////////////////////////
-	var filterArray = [2,2,2,2];		// filter-arg-array
 	$("#u-page-size").change(function() {																		//........query by size........
 		getPage("user", 
 				$(this).children("option:selected").val(), 
 				$("#user-list>input[type='hidden']").val(), 
-				parseIntArray2String(filterArray), 
+				parseIntArray2String(userFilterArray), 
 				$("input[type='radio'][name='user-list-sort']:checked").val());
 	});
 	$("input[type='radio'][name='user-list-sort']").click(function() {											//........query by sort solution........
 		getPage("user", 
 				$("#u-page-size").children("option:selected").val(), 
 				$("#user-list>input[type='hidden']").val(), 
-				parseIntArray2String(filterArray), 
+				parseIntArray2String(userFilterArray), 
 				$(this).val());
 	});
 	$("input[type='checkbox'][name='user-list-filter']").click(function() {										//........query by filter........
@@ -81,52 +42,113 @@ $(document).ready(function() {
 			$("input[type='checkbox'][name='user-list-filter'][pos=" + i + "]:checked").each(function() {
 				c += parseInt($(this).val())+1;
 			});
-			filterArray[i] = c!=0? c-1 : 2;
+			userFilterArray[i] = c!=0? c-1 : 2;
 			c = 0;
 		}
 		getPage("user", 
 				$("#u-page-size").children("option:selected").val(), 
 				$("#user-list>input[type='hidden']").val(), 
-				parseIntArray2String(filterArray), 
-				$("input[type='radio'][name='user-list-sort']:checked").val());
-	});
-	$("#user-list>.page-navi>.counter").click(function() {														//........query by page........
-		getPage("user", 
-				$("#u-page-size").children("option:selected").val(), 
-				parseInt($("#user-list>.page-navi>.counter-base").attr("which-page"))+parseInt($(this).attr("which-page")), 
-				parseIntArray2String(filterArray), 
-				$("input[type='radio'][name='user-list-sort']:checked").val());
-	});
-	$("#user-list>.page-navi>.first,#user-list>.page-navi>.last,#user-list>.page-navi>.counter-base,#user-list>.page-navi>.counter-next").click(function() {
-		getPage("user", 
-				$("#u-page-size").children("option:selected").val(), 
-				parseInt($(this).attr("which-page")), 
-				parseIntArray2String(filterArray), 
+				parseIntArray2String(userFilterArray), 
 				$("input[type='radio'][name='user-list-sort']:checked").val());
 	});
 	
 	
 });
 
-function getPage(type, size, currentPage, filterArray, sortArray) {
+function getPage(type, size, currentPage, userFilterArray, userSortArray) {
 	$.ajax( {
 		type: "POST",
 		url: "queryPage",
-		data: { naviType : type, pageSize : size, currentPage : currentPage, filterArray : filterArray, sortArray : sortArray },
+		data: { naviType : type, pageSize : size, currentPage : currentPage, userFilterArray : userFilterArray, userSortArray : userSortArray },
 		dataType: "json"
 	}).done(function( json ) {
 		var data = eval("("+json+")");
-		$(".page-navi").html(data.pageNavi);
-		$("#good-item").html("");
-		$.each(data.content, function(i, item) {
-			$("#good-item").append("<hr><div class='item'><div class='title'><a href='<%=basepath%>/g/" + item.id + "'>" + item.title + "</a><span class='buyer-count'>(" + item.buyerCount + ")</span></div><div class='price'>" + item.price + "<span class='currency'>RMB</span></div><div class='pic'><img src='<%=basepath%>/" + item.pic + "' /></div><div class='desc'>" + item.desc + "</div><div class='date'>" + item.addTime.date + "</div><div style='clear: both'></div></div>");
-		});
+		if (data.dataType == "user") {
+			$("#user-list>table>tbody>.data-row").remove();
+			$.each(data.result, function(i, u) {
+				var status1 = "<td><span class=\"" + (u.isSuspend? "t" : "f") + "\" data-coor=\"user," + u.id + ",0\">01</span></td>";
+				var status2 = "<td><span class=\"" + (u.isDelete? "t" : "f") + "\" data-coor=\"user," + u.id + ",1\">01</span></td>";
+				var status3 = "<td><span class=\"" + (u.isRestricted? "t" : "f") + "\" data-coor=\"user," + u.id + ",2\">01</span></td>";
+				var status4 = "<td><span style=\"" + (u.isPublisher? "background-color:rgb(174, 255, 100);color:rgb(174, 255, 100)" : "background-color:rgb(243, 86, 86);color:rgb(243, 86, 86)") + ";cursor:default\">01</span></td>";
+				$("#user-list>table>tbody>tr:last").after("<tr class=\"data-row\"><td>" + u.id + "</td><td><img src=\"<%=basepath%>/" + u.portrait + "\" title=\"" + u.name + "'s portrait\" /></td><td><a href=\"<%=basepath%>/u/" + u.account + "\" target=\"_blank\">" + u.name + "</a></td>" + status1 + status2 + status3 + status4 + "</tr>");
+			});
+			$("#user-list>.page-navi").html(data.naviBar);
+		}
 		
 		registerInteractiveAction();
 	}).fail(function() {
 		alert("FAIL");
 	}).error(function (XMLHttpRequest, textStatus, errorThrown) {
 		$("#ajax").html(XMLHttpRequest.responseText);
+	});
+}
+
+function toggleStatus(statusCoor) {		// statusCoor = entityType + uid + dataColumn + Columnstatus
+	$.ajax( {
+		type: "POST",
+		url: "toggleStatus",
+		data: {statusCoor : statusCoor},
+		dataType: "json"
+	}).success(function( json ) {
+		var data = eval("("+json+")");
+		if (!data.isSucceed)
+			alert("操作失败");
+		
+		registerInteractiveAction();
+	}).fail(function() {
+		alert("FAIL");
+	}).error(function (XMLHttpRequest, textStatus, errorThrown) {
+		$("#ajax").html(XMLHttpRequest.responseText);
+	});
+}
+
+function registerInteractiveAction() {
+	// hover style
+	$(".t").hover(function() {
+		$(this).toggleClass("t", false).toggleClass("t-h", true).toggleClass("f", false).toggleClass("f-h", false).css("cursor", "pointer");
+	}, function() {
+		$(this).toggleClass("t", true).toggleClass("t-h", false).toggleClass("f", false);
+	});
+	$(".f").hover(function() {
+		$(this).toggleClass("f", false).toggleClass("f-h", true).toggleClass("t", false).toggleClass("t-h", false).css("cursor", "pointer");
+	}, function() {
+		$(this).toggleClass("f", true).toggleClass("f-h", false).toggleClass("t", false);
+	});
+	$(".page-navi>.first,.page-navi>.last").hover(function() {
+		$(this).css({"color" : "#FFF", "background-color" : "rgb(190, 240, 255)"});
+	}, function() {
+		$(this).css({"color" : "rgb(190, 240, 255)", "background-color" : "#FFF"});
+	});
+	$(".page-navi>.counter").hover(function() {
+		$(this).addClass("hover");
+	}, function() {
+		$(this).removeClass("hover");
+	});
+	
+	// page navi-bar click action
+	$("#user-list>.page-navi>.counter").click(function() {														//........query by page........
+		getPage("user", 
+				$("#u-page-size").children("option:selected").val(), 
+				parseInt($("#user-list>.page-navi>.counter-base").attr("which-page"))+parseInt($(this).attr("which-page")), 
+				parseIntArray2String(userFilterArray), 
+				$("input[type='radio'][name='user-list-sort']:checked").val());
+	});
+	$("#user-list>.page-navi>.first,#user-list>.page-navi>.last,#user-list>.page-navi>.counter-base,#user-list>.page-navi>.counter-next").click(function() {
+		getPage("user", 
+				$("#u-page-size").children("option:selected").val(), 
+				parseInt($(this).attr("which-page")), 
+				parseIntArray2String(userFilterArray), 
+				$("input[type='radio'][name='user-list-sort']:checked").val());
+	});
+	
+	// status-span click action
+	$(".f").click(function() {
+		toggleStatus($(this).data("coor") + ",1");
+		$(this).toggleClass("f-h", false).toggleClass("f", false).toggleClass("t", true).css("cursor", "default");
+	});
+	$(".t").click(function() {
+		toggleStatus($(this).data("coor") + ",0");
+		$(this).toggleClass("t-h", false).toggleClass("t", false).toggleClass("f", true).css("cursor", "default");
 	});
 }
 
@@ -157,6 +179,7 @@ function parseIntArray2String(array) {
 		<option value="9">9</option>
 		<option value="10">10</option>
 	</select>
+	<span class="warning">请别点击小方块频率过快或过多，容易造成数据库没响应导致服务器没响应，因为后台需要大量的权限验证。加上js性能原因（也许），有时会出现显示出错</span>
 </h4>
 <input type="hidden" value="${userList.currentPage}" />
 <table border="1" width="30%" align="center">
@@ -179,14 +202,14 @@ function parseIntArray2String(array) {
 		<td>publisher?</td>
 	</tr>
 <s:iterator value="#request.userList.result" id="user">
-	<tr>
+	<tr class="data-row">
 		<td>${user.id}</td>
 		<td><img src="<%=basepath%>/${user.portrait}" title="${user.name}'s portrait" /></td>
 		<td><a href="<%=basepath%>/u/${user.account}" target="_blank">${user.name}</a></td>
-		<td><span class="<s:if test="#user.isSuspend">t</s:if><s:else>f</s:else>">01</span></td>
-		<td><span class="<s:if test="#user.isDelete">t</s:if><s:else>f</s:else>">01</span></td>
-		<td><span class="<s:if test="#user.isRestrict">t</s:if><s:else>f</s:else>">01</span></td>
-		<td><span style="<s:if test="#user.isPublisher">background-color:rgb(243, 86, 86);color:rgb(243, 86, 86)</s:if><s:else>background-color:rgb(174, 255, 100);color:rgb(174, 255, 100)</s:else>;cursor:default">01</span></td>
+		<td><span class="<s:if test="#user.isSuspend">t</s:if><s:else>f</s:else>" data-coor="user,${user.id},0">01</span></td>
+		<td><span class="<s:if test="#user.isDelete">t</s:if><s:else>f</s:else>"  data-coor="user,${user.id},1">01</span></td>
+		<td><span class="<s:if test="#user.isRestricted">t</s:if><s:else>f</s:else>" data-coor="user,${user.id},2">01</span></td>
+		<td><span style="<s:if test="#user.isPublisher">background-color:rgb(174, 255, 100);color:rgb(174, 255, 100)</s:if><s:else>background-color:rgb(243, 86, 86);color:rgb(243, 86, 86)</s:else>;cursor:default">01</span></td>
 	</tr>
 </s:iterator>
 </table>
@@ -210,6 +233,7 @@ ${userList.naviBar}
 		<option value="9">9</option>
 		<option value="10">10</option>
 	</select>
+	<span class="warning">当出现操作无响应时（就是结果未变），请重启服务器吧</span>
 </h4>
 <input type="hidden" value="${publisherList.currentPage}" />
 <table border="1" width="40%" align="center">

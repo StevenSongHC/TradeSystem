@@ -95,6 +95,13 @@ public class UserServiceImpl implements UserService {
 			index++;
 		}
 		
+		// exclude admin
+		if (!flag)
+			condition.append(" where");
+		if (isMulti)
+			condition.append(" and");
+		condition.append(" u.id>1");
+		
 		PageBean pb = new PageBean();
 		pb.setCurrentPage(currentPage);
 		pb.setPageSize(pageSize);
@@ -110,6 +117,14 @@ public class UserServiceImpl implements UserService {
 		}
 		pb.setNaviBar(PageUtil.drawNavi(pb.getCurrentPage(), pb.getTotalPage()));
 		return pb;
+	}
+	
+	public boolean checkAuth(int uid, String auth) {
+		return userDao.checkAuth(uid, auth);
+	}
+	
+	public boolean modifyAuth(int uid, String auth, int val) {
+		return userDao.modifyAuth(uid, auth, val);
 	}
 	
 }

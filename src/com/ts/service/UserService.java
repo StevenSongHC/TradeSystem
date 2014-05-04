@@ -36,5 +36,9 @@ public interface UserService {
 	/*public PageBean getUserPageList(final int pageSize, final int currentPage,
 									final int isSuspend, final int isDelete, final int isRestricted, final int isPublisher);*/
 	public PageBean getUserPageList(final int pageSize, final int currentPage, final String conditions[][], final String sort[]);
+	
+	public boolean checkAuth(int uid, String auth);
+	
+	public boolean modifyAuth(int uid, String auth, int val);
 
 }
