@@ -17,24 +17,34 @@ table .status {
 	width: 70px;
 }
 .t {
-	background-color: rgb(243, 86, 86);
-	color: rgb(243, 86, 86);
+	background-color: rgb(114, 114, 114);
+	color: rgb(114, 114, 114);
 	cursor: pointer;
 }
 .t-h {
-	background-color: rgb(128, 250, 16);
-	color: rgb(128, 250, 16);
+	background-color:rgb(201, 201, 201);
+	color: rgb(201, 201, 201);
 	cursor: pointer;
 }
 .f {
-	background-color: rgb(174, 255, 100);
-	color: rgb(174, 255, 100);
+	background-color: rgb(231, 231, 231);
+	color: rgb(231, 231, 231);
 	cursor: pointer;
 }
 .f-h {
-	background-color: rgb(250, 25, 25);
-	color: rgb(250, 25, 25);
+	background-color: rgb(184, 184, 184);
+	color: rgb(184, 184, 184);
 	cursor: pointer;
+}
+.st {
+	background-color: rgb(174, 255, 100);
+	color: rgb(174, 255, 100);
+	cursor: default;
+}
+.sf {
+	background-color: rgb(243, 86, 86);
+	color: rgb(243, 86, 86);
+	cursor: default;
 }
 .warning {
 	padding: 3px;

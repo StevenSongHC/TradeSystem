@@ -14,6 +14,7 @@ String basepath = request.getContextPath();
 <script type="text/javascript"	src="<%=basepath%>/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
 var userFilterArray = [2,2,2,2];		// filter-arg-array
+var publisherFilterArray = [2,2];
 $(document).ready(function() {
 	registerInteractiveAction();
 	
@@ -52,27 +53,81 @@ $(document).ready(function() {
 				$("input[type='radio'][name='user-list-sort']:checked").val());
 	});
 	
+	///////////////////////////////////////////////////////////////////////
+	//////////////////////   query publisher list   ///////////////////////
+	///////////////////////////////////////////////////////////////////////
+	$("#p-page-size").change(function() {																		//........query by size........
+		getPage("publisher", 
+				$(this).children("option:selected").val(), 
+				$("#publisher-list>input[type='hidden']").val(), 
+				parseIntArray2String(publisherFilterArray), 
+				$("input[type='radio'][name='publisher-list-sort']:checked").val());
+	});
+	$("input[type='radio'][name='publisher-list-sort']").click(function() {											//........query by sort solution........
+		getPage("publisher", 
+				$("#p-page-size").children("option:selected").val(), 
+				$("#publisher-list>input[type='hidden']").val(), 
+				parseIntArray2String(publisherFilterArray), 
+				$(this).val());
+	});
+	$("input[type='checkbox'][name='publisher-list-filter']").click(function() {										//........query by filter........
+		// initial
+		var c = 0;																						// counter
+		var n = parseInt($("input[type='checkbox'][name='publisher-list-filter']").last().attr("pos"))+1;	// loop
+		for (var i=0; i<n; i++) {
+			$("input[type='checkbox'][name='publisher-list-filter'][pos=" + i + "]:checked").each(function() {
+				c += parseInt($(this).val())+1;
+			});
+			publisherFilterArray[i] = c!=0? c-1 : 2;
+			c = 0;
+		}
+		getPage("publisher", 
+				$("#p-page-size").children("option:selected").val(), 
+				$("#publisher-list>input[type='hidden']").val(), 
+				parseIntArray2String(publisherFilterArray), 
+				$("input[type='radio'][name='publisher-list-sort']:checked").val());
+	});
+	
+	
 	
 });
 
-function getPage(type, size, currentPage, userFilterArray, userSortArray) {
+function getPage(type, size, currentPage, filterArray, sortArray) {
 	$.ajax( {
 		type: "POST",
 		url: "queryPage",
-		data: { naviType : type, pageSize : size, currentPage : currentPage, userFilterArray : userFilterArray, userSortArray : userSortArray },
+		data: { naviType : type, pageSize : size, currentPage : currentPage, filterArray : filterArray, sortArray : sortArray },
 		dataType: "json"
 	}).done(function( json ) {
 		var data = eval("("+json+")");
 		if (data.dataType == "user") {
 			$("#user-list>table>tbody>.data-row").remove();
 			$.each(data.result, function(i, u) {
-				var status1 = "<td><span class=\"" + (u.isSuspend? "t" : "f") + "\" data-coor=\"user," + u.id + ",0\">01</span></td>";
-				var status2 = "<td><span class=\"" + (u.isDelete? "t" : "f") + "\" data-coor=\"user," + u.id + ",1\">01</span></td>";
-				var status3 = "<td><span class=\"" + (u.isRestricted? "t" : "f") + "\" data-coor=\"user," + u.id + ",2\">01</span></td>";
-				var status4 = "<td><span style=\"" + (u.isPublisher? "background-color:rgb(174, 255, 100);color:rgb(174, 255, 100)" : "background-color:rgb(243, 86, 86);color:rgb(243, 86, 86)") + ";cursor:default\">01</span></td>";
-				$("#user-list>table>tbody>tr:last").after("<tr class=\"data-row\"><td>" + u.id + "</td><td><img src=\"<%=basepath%>/" + u.portrait + "\" title=\"" + u.name + "'s portrait\" /></td><td><a href=\"<%=basepath%>/u/" + u.account + "\" target=\"_blank\">" + u.name + "</a></td>" + status1 + status2 + status3 + status4 + "</tr>");
+				var col1 = "<td>" + u.id + "</td>";
+				var col2 = "<td><img src=\"<%=basepath%>/" + u.portrait + "\" title=\"" + u.name + "'s portrait\" /></td>";
+				var col3 = "<td><a href=\"<%=basepath%>/u/" + u.account + "\" target=\"_blank\">" + u.name + "</a></td>";
+				var col4 = "<td><span class=\"" + (u.isSuspend? "t" : "f") + "\" data-coor=\"user," + u.id + ",0\">01</span></td>";
+				var col5 = "<td><span class=\"" + (u.isDelete? "t" : "f") + "\" data-coor=\"user," + u.id + ",1\">01</span></td>";
+				var col6 = "<td><span class=\"" + (u.isRestricted? "t" : "f") + "\" data-coor=\"user," + u.id + ",2\">01</span></td>";
+				var col7 = "<td><span class=\"" + (u.isPublisher? "st" : "sf") + "\">01</span></td>";
+				$("#user-list>table>tbody>tr:last").after("<tr class=\"data-row\">" + col1 + col2 + col3 + col4 + col5 + col6 + col7 + "</tr>");
 			});
 			$("#user-list>.page-navi").html(data.naviBar);
+		}
+		else if (data.dataType == "publisher") {
+			$("#publisher-list>table>tbody>.data-row").remove();
+			$.each(data.result, function(i, p) {
+				var col1 = "<td>" + p.id + "</td>";
+				var col2 = "<td>" + p.uid + "</td>";
+				var col3 = "<td><a href=\"<%=basepath%>/p/" + p.id + "\" target=\"_blank\">" + p.name + "</a></td>";
+				var col4 = "<td>" + p.contact + "</td>";
+				var col5 = "<td>" + p.joinDate + "</td>";
+				var col6 = "<td>" + p.goodCount + "</td>";
+				var col7 = "<td><span class=\"" + (p.isActivate? "t" : "f") + "\" data-coor=\"publisher," + p.id + ",0\">01</span></td>";
+				var col8 = "<td><span class=\"" + (p.isRestricted? "t" : "f") + "\" data-coor=\"publisher," + p.id + ",1\">01</span></td>";
+				$("#publisher-list>table>tbody>tr:last").after("<tr class=\"data-row\">" + col1 + col2 + col3 + col4+ col5+ col6+ col7 + col8 + "</tr>");
+			});
+			$("#publisher-list>.page-navi").html(data.naviBar);
 		}
 		
 		registerInteractiveAction();
@@ -139,6 +194,20 @@ function registerInteractiveAction() {
 				parseInt($(this).attr("which-page")), 
 				parseIntArray2String(userFilterArray), 
 				$("input[type='radio'][name='user-list-sort']:checked").val());
+	});
+	$("#publisher-list>.page-navi>.counter").click(function() {														//........query by page........
+		getPage("publisher", 
+				$("#p-page-size").children("option:selected").val(), 
+				parseInt($("#publisher-list>.page-navi>.counter-base").attr("which-page"))+parseInt($(this).attr("which-page")), 
+				parseIntArray2String(publisherFilterArray), 
+				$("input[type='radio'][name='publisher-list-sort']:checked").val());
+	});
+	$("#publisher-list>.page-navi>.first,#publisher-list>.page-navi>.last,#publisher-list>.page-navi>.counter-base,#publisher-list>.page-navi>.counter-next").click(function() {
+		getPage("publisher", 
+				$("#p-page-size").children("option:selected").val(), 
+				parseInt($(this).attr("which-page")), 
+				parseIntArray2String(publisherFilterArray), 
+				$("input[type='radio'][name='publisher-list-sort']:checked").val());
 	});
 	
 	// status-span click action
@@ -209,7 +278,7 @@ function parseIntArray2String(array) {
 		<td><span class="<s:if test="#user.isSuspend">t</s:if><s:else>f</s:else>" data-coor="user,${user.id},0">01</span></td>
 		<td><span class="<s:if test="#user.isDelete">t</s:if><s:else>f</s:else>"  data-coor="user,${user.id},1">01</span></td>
 		<td><span class="<s:if test="#user.isRestricted">t</s:if><s:else>f</s:else>" data-coor="user,${user.id},2">01</span></td>
-		<td><span style="<s:if test="#user.isPublisher">background-color:rgb(174, 255, 100);color:rgb(174, 255, 100)</s:if><s:else>background-color:rgb(243, 86, 86);color:rgb(243, 86, 86)</s:else>;cursor:default">01</span></td>
+		<td><span class="<s:if test="#user.isPublisher">st</s:if><s:else>sf</s:else>">01</span></td>
 	</tr>
 </s:iterator>
 </table>
@@ -238,23 +307,35 @@ ${userList.naviBar}
 <input type="hidden" value="${publisherList.currentPage}" />
 <table border="1" width="40%" align="center">
 	<tr>
+		<td><input type="radio" name="publisher-list-sort" checked="checked" value="id,0" />↑ | ↓<input type="radio" name="publisher-list-sort" value="id,1" /></td>
+		<td><input type="radio" name="publisher-list-sort" value="uid,0" />↑ | ↓<input type="radio" name="publisher-list-sort" value="uid,1" /></td>
+		<td><input type="radio" name="publisher-list-sort" value="name,0" />↑ | ↓<input type="radio" name="publisher-list-sort" value="name,1" /></td>
+		<td></td>
+		<td><input type="radio" name="publisher-list-sort" value="joinDate,0" />↑ | ↓<input type="radio" name="publisher-list-sort" value="joinDate,1" /></td>
+		<td><input type="radio" name="publisher-list-sort" value="goodCount,0" />↑ | ↓<input type="radio" name="publisher-list-sort" value="goodCount,1" /></td>
+		<td><input type="checkbox" name="publisher-list-filter" pos=0 value="1" />1 | 0<input type="checkbox" name="publisher-list-filter" pos=0 value="0" /></td>
+		<td><input type="checkbox" name="publisher-list-filter" pos=1 value="1" />1 | 0<input type="checkbox" name="publisher-list-filter" pos=1 value="0" /></td>
+	</tr>
+	<tr>
 		<td>pid</td>
 		<td>uid</td>
 		<td>p_name</td>
 		<td>p_contact</td>
 		<td>p_joinDate</td>
 		<td>p_goodCount</td>
+		<td class="status">activate</td>
 		<td class="status">restrict</td>
 	</tr>
 <s:iterator value="#request.publisherList.result" id="publisher">
-	<tr>
+	<tr class="data-row">
 		<td>${publisher.id}</td>
 		<td>${publisher.uid}</td>
 		<td><a href="<%=basepath%>/p/${publisher.id}" target="_blank">${publisher.name}</a></td>
 		<td>${publisher.contact}</td>
 		<td>${publisher.joinDate}</td>
 		<td>${publisher.goodCount}</td>
-		<td><span class="<s:if test="#publisher.isRestricted">t</s:if><s:else>f</s:else>">01</span></td>
+		<td><span class="<s:if test="#publisher.isActivate">t</s:if><s:else>f</s:else>" data-coor="publisher,${publisher.id},0">01</span></td>
+		<td><span class="<s:if test="#publisher.isRestricted">t</s:if><s:else>f</s:else>" data-coor="publisher,${publisher.id},1">01</span></td>
 	</tr>
 </s:iterator>
 </table>

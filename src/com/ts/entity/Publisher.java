@@ -1,6 +1,6 @@
 package com.ts.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Publisher implements java.io.Serializable {

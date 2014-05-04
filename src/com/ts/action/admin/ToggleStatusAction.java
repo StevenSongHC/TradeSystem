@@ -23,10 +23,6 @@ public class ToggleStatusAction extends ActionSupport {
 	
 	public String execute() throws Exception {
 		System.out.println("coor: "+statusCoor);
-				
-		final String PUBLISHER_COLUMN[] = 	 {"isActivate",
-							   				  "isRestricted"};
-		
 		final String GOOD_COLUMN[] = 		 {"isComplete",
 											  "isAgree",
 											  "isAvailable",
@@ -70,7 +66,37 @@ public class ToggleStatusAction extends ActionSupport {
 			}
 			// PUBLISHER TABLE
 			else if(type.equals("publisher")) {
-				// TO-DO
+				Publisher tommy = pService.getPublisherByPid(id);
+				switch (column) {
+				case 0:
+					if (uService.checkAuth(admin.getUid(), "auth_agree_publisher"))
+						tommy.setIsActivate(status);
+					break;
+				case 1:		// restricted(status=1) = all authorities of being a publisher vanished
+					if (uService.checkAuth(admin.getUid(), "auth_edit_any_user"))
+						tommy.setIsRestricted(status);
+					uService.modifyAuth(tommy.getUid(), "auth_edit_good", (status? 0 : 1));
+					uService.modifyAuth(tommy.getUid(), "auth_suspend_good", (status? 0 : 1));
+					uService.modifyAuth(tommy.getUid(), "auth_delete_good", (status? 0 : 1));
+					break;
+				default:
+					System.out.println("toggle status failed");		// log it
+			}
+				// column = 0 and disable -> bad || column = 1 and enable -> bad...
+				System.out.println("column " + column + "    status " + status);
+				if (((column == 0 && status) || (column == 1 && !status)) && tommy.getIsActivate() && !tommy.getIsRestricted())
+					val = 1;
+				else
+					val = 0;
+				if ((column == 0 ||
+						(!uService.checkAuth(tommy.getUid(), "auth_edit_good") == status &&
+						!uService.checkAuth(tommy.getUid(), "auth_suspend_good") == status &&
+						!uService.checkAuth(tommy.getUid(), "auth_delete_good") == status)) &&
+						pService.updatePublisher(tommy) && 
+						uService.modifyAuth(tommy.getUid(), "auth_publish_good", val))
+					json = "{isSucceed:true}";
+				else
+					json = "{isSucceed:false}";
 			}
 		}
 		else

@@ -43,9 +43,10 @@ public class GetAllDataAction extends ActionSupport implements RequestAware {
 		int goodColumnArgs[] = {2, 2, 2, 2};
 		
 		// SORT solution
+		// default sort by id desc
 		String[] userColumnSort = {"id", "0"};				// id | name
-		String[] publisherColumnSort = {"joinDate", "0"};	// id | name | joinDate | goodCount
-		String[] goodColumnSort = {"price", "0"};			// id | pid  | price    | buyerCount | addTime
+		String[] publisherColumnSort = {"id", "0"};	// id | name | joinDate | goodCount
+		String[] goodColumnSort = {"id", "0"};			// id | pid  | price    | buyerCount | addTime
 		
 		// query conditions
 		String userColumnConditions[][] = new String[2][4];
