@@ -12,7 +12,7 @@ import com.ts.service.UserService;
 public class GetAllDataAction extends ActionSupport implements RequestAware {
 
 	/**
-	 * 
+	 * 进入管理员页面所获取的数据
 	 */
 	private static final long serialVersionUID = 2045850679244368692L;
 	
@@ -24,6 +24,7 @@ public class GetAllDataAction extends ActionSupport implements RequestAware {
 
 	@Override
 	public String execute() throws Exception {
+		// 对应的每一数据库的字段和值都用数组表示，之后的impl会遍历，放回符合条件的数据
 		// FILTER columns
 		final String USER_COLUMN[] = {"isSuspend",
 								 "isDelete",
@@ -45,8 +46,8 @@ public class GetAllDataAction extends ActionSupport implements RequestAware {
 		// SORT solution
 		// default sort by id desc
 		String[] userColumnSort = {"id", "0"};				// id | name
-		String[] publisherColumnSort = {"id", "0"};	// id | name | joinDate | goodCount
-		String[] goodColumnSort = {"id", "0"};			// id | pid  | price    | buyerCount | addTime
+		String[] publisherColumnSort = {"id", "0"};			// id | name 		 | joinDate | goodCount
+		String[] goodColumnSort = {"id", "0"};				// id | publisherId  | price    | buyerCount | addTime
 		
 		// query conditions
 		String userColumnConditions[][] = new String[2][4];

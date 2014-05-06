@@ -264,6 +264,7 @@
     	<property name="uService" ref="userService"/>
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
+    	<property name="mService" ref="messageService"/>
     </bean>
     <bean id="buyGoodAction" scope="prototype" class="com.ts.action.user.BuyGoodAction">
     	<property name="uService" ref="userService"/>

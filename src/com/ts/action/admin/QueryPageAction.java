@@ -78,11 +78,9 @@ public class QueryPageAction extends ActionSupport {
 			}
 			
 			pb = uService.getUserPageList(pageSize, currentPage, userColumnConditions, sortArray.split(","));
-			pb.setDataType("user");
 		}
 		
 		else if(naviType.equals("publisher")) {
-			
 			for (int i =0; i<publisherColumnArgs.length; i++) {
 				publisherColumnArgs[i] = Integer.parseInt(filterArray.split(",")[i]);
 			}
@@ -93,8 +91,22 @@ public class QueryPageAction extends ActionSupport {
 			}
 			
 			pb = pService.getPublisherPageList(pageSize, currentPage, publisherColumnConditions, sortArray.split(","));
-			pb.setDataType("publisher");
 		}
+		
+		else if (naviType.equals("good")) {
+			for (int i =0; i<goodColumnArgs.length; i++) {
+				goodColumnArgs[i] = Integer.parseInt(filterArray.split(",")[i]);
+			}
+			
+			for (int i=0; i<goodColumnConditions[0].length; i++) {
+				goodColumnConditions[0][i] = GOOD_COLUMN[i];
+				goodColumnConditions[1][i] = String.valueOf(goodColumnArgs[i]);
+			}
+			
+			pb = gService.getGoodPageList(pageSize, currentPage, goodColumnConditions, sortArray.split(","));
+		}
+		
+		pb.setDataType(naviType);
 		
 		json = JSONObject.fromObject(pb, jsonConfig).toString();
 		System.out.println(json);

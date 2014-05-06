@@ -15,9 +15,11 @@ String basepath = request.getContextPath();
 <script type="text/javascript">
 var userFilterArray = [2,2,2,2];		// filter-arg-array
 var publisherFilterArray = [2,2];
+var goodFilterArray = [2,2,2,2];
 $(document).ready(function() {
 	registerInteractiveAction();
 	
+	// ....................  bind components to query list...............//
 	///////////////////////////////////////////////////////////////////////
 	/////////////////////////   query user list   /////////////////////////
 	///////////////////////////////////////////////////////////////////////
@@ -88,6 +90,41 @@ $(document).ready(function() {
 				$("input[type='radio'][name='publisher-list-sort']:checked").val());
 	});
 	
+	///////////////////////////////////////////////////////////////////////
+	/////////////////////////   query good list   /////////////////////////
+	///////////////////////////////////////////////////////////////////////
+	$("#g-page-size").change(function() {																		//........query by size........
+		getPage("good", 
+				$(this).children("option:selected").val(), 
+				$("#good-list>input[type='hidden']").val(), 
+				parseIntArray2String(goodFilterArray), 
+				$("input[type='radio'][name='good-list-sort']:checked").val());
+	});
+	$("input[type='radio'][name='good-list-sort']").click(function() {											//........query by sort solution........
+		getPage("good", 
+				$("#g-page-size").children("option:selected").val(), 
+				$("#good-list>input[type='hidden']").val(), 
+				parseIntArray2String(goodFilterArray), 
+				$(this).val());
+	});
+	$("input[type='checkbox'][name='good-list-filter']").click(function() {										//........query by filter........
+		// initial
+		var c = 0;																						// counter
+		var n = parseInt($("input[type='checkbox'][name='good-list-filter']").last().attr("pos"))+1;	// loop
+		for (var i=0; i<n; i++) {
+			$("input[type='checkbox'][name='good-list-filter'][pos=" + i + "]:checked").each(function() {
+				c += parseInt($(this).val())+1;
+			});
+			goodFilterArray[i] = c!=0? c-1 : 2;
+			c = 0;
+		}
+		getPage("good", 
+				$("#g-page-size").children("option:selected").val(), 
+				$("#good-list>input[type='hidden']").val(), 
+				parseIntArray2String(goodFilterArray), 
+				$("input[type='radio'][name='good-list-sort']:checked").val());
+	});
+	$("")
 	
 	
 });
@@ -128,6 +165,25 @@ function getPage(type, size, currentPage, filterArray, sortArray) {
 				$("#publisher-list>table>tbody>tr:last").after("<tr class=\"data-row\">" + col1 + col2 + col3 + col4+ col5+ col6+ col7 + col8 + "</tr>");
 			});
 			$("#publisher-list>.page-navi").html(data.naviBar);
+		}
+		else if (data.dataType == "good") {
+			$("#good-list>table>tbody>.data-row").remove();
+			$.each(data.result, function(i, g) {
+				var col1 = "<td>" + g.id + "</td>";
+				var col2 = "<td>" + g.publisherId + "</td>";
+				var col3 = "<td><img src=\"<%=basepath%>/" + g.pic + "\" title=\"" + g.title + "'s pic\" /></td>";
+				var col4 = "<td><a href=\"<%=basepath%>/g/" + g.id + "\" target=\"_blank\">" + g.title + "</a></td>";
+				var col5 = "<td>" + g.price + " RMB</td>";
+				var col6 = "<td>" + (1900+g.addTime.year) + "-" + (g.addTime.month+1) + "-" + g.addTime.date + " " + g.addTime.hours + ":" + g.addTime.minutes + ":" + g.addTime.seconds + "</td>";
+				var col7 = "<td>" + g.buyerCount + "</td>";
+				var col8 = "<td><span class=\"" + (g.isComplete? "t" : "f") + "\" data-coor=\"good," + g.id + ",0\">01</span></td>";
+				var col9 = "<td><span class=\"" + (g.isAgree? "t" : "f") + "\" data-coor=\"good," + g.id + ",1\">01</span></td>";
+				var col10 = "<td><span class=\"" + (g.isAvailable? "t" : "f") + "\" data-coor=\"good," + g.id + ",2\">01</span></td>";
+				var col11 = "<td><span class=\"" + (g.isDelete? "t" : "f") + "\" data-coor=\"good," + g.id + ",3\">01</span></td>";
+				var col12 = "<td><span class=\"" + ((g.isComplete && g.isAgree && g.isAvailable && !g.isDelete)? "st" : "sf") + "\">01</span></td>";
+				$("#good-list>table>tbody>tr:last").after("<tr class=\"data-row\">" + col1 + col2 + col3 + col4+ col5+ col6+ col7 + col8 + col9 + col10 + col11 + col12 + "</tr>");
+			});
+			$("#good-list>.page-navi").html(data.naviBar);
 		}
 		
 		registerInteractiveAction();
@@ -208,6 +264,20 @@ function registerInteractiveAction() {
 				parseInt($(this).attr("which-page")), 
 				parseIntArray2String(publisherFilterArray), 
 				$("input[type='radio'][name='publisher-list-sort']:checked").val());
+	});
+	$("#good-list>.page-navi>.counter").click(function() {														//........query by page........
+		getPage("good", 
+				$("#g-page-size").children("option:selected").val(), 
+				parseInt($("#good-list>.page-navi>.counter-base").attr("which-page"))+parseInt($(this).attr("which-page")), 
+				parseIntArray2String(goodFilterArray), 
+				$("input[type='radio'][name='good-list-sort']:checked").val());
+	});
+	$("#good-list>.page-navi>.first,#good-list>.page-navi>.last,#good-list>.page-navi>.counter-base,#good-list>.page-navi>.counter-next").click(function() {
+		getPage("good", 
+				$("#g-page-size").children("option:selected").val(), 
+				parseInt($(this).attr("which-page")), 
+				parseIntArray2String(goodFilterArray), 
+				$("input[type='radio'][name='good-list-sort']:checked").val());
 	});
 	
 	// status-span click action
@@ -302,7 +372,7 @@ ${userList.naviBar}
 		<option value="9">9</option>
 		<option value="10">10</option>
 	</select>
-	<span class="warning">当出现操作无响应时（就是结果未变），请重启服务器吧</span>
+	<span class="warning">当出现操作无响应时（就是结果未变），先尝试刷新页面，无法刷新时再重启服务器吧</span>
 </h4>
 <input type="hidden" value="${publisherList.currentPage}" />
 <table border="1" width="40%" align="center">
@@ -363,6 +433,19 @@ ${publisherList.naviBar}
 <input type="hidden" value="${goodList.currentPage}" />
 <table border="1" width="50%" align="center">
 	<tr>
+		<td><input type="radio" name="good-list-sort" checked="checked" value="id,0" />↑ | ↓<input type="radio" name="good-list-sort" value="id,1" /></td>
+		<td><input type="radio" name="good-list-sort" value="publisherId,0" />↑ | ↓<input type="radio" name="good-list-sort" value="publisherId,1" /></td>
+		<td></td>
+		<td><input type="radio" name="good-list-sort" value="title,0" />↑ | ↓<input type="radio" name="good-list-sort" value="title,1" /></td>
+		<td><input type="radio" name="good-list-sort" value="price,0" />↑ | ↓<input type="radio" name="good-list-sort" value="price,1" /></td>
+		<td><input type="radio" name="good-list-sort" value="addTime,0" />↑ | ↓<input type="radio" name="good-list-sort" value="addTime,1" /></td>
+		<td><input type="radio" name="good-list-sort" value="buyerCount,0" />↑ | ↓<input type="radio" name="good-list-sort" value="buyerCount,1" /></td>
+		<td><input type="checkbox" name="good-list-filter" pos=0 value="1" />1 | 0<input type="checkbox" name="good-list-filter" pos=0 value="0" /></td>
+		<td><input type="checkbox" name="good-list-filter" pos=1 value="1" />1 | 0<input type="checkbox" name="good-list-filter" pos=1 value="0" /></td>
+		<td><input type="checkbox" name="good-list-filter" pos=2 value="1" />1 | 0<input type="checkbox" name="good-list-filter" pos=2 value="0" /></td>
+		<td><input type="checkbox" name="good-list-filter" pos=3 value="1" />1 | 0<input type="checkbox" name="good-list-filter" pos=3 value="0" /></td>-
+	</tr>
+	<tr>
 		<td>gid</td>
 		<td>pid</td>
 		<td>g_pic</td>
@@ -370,11 +453,13 @@ ${publisherList.naviBar}
 		<td>g_price</td>
 		<td>g_addTime</td>
 		<td>g_buyerCount</td>
-		<td>online[agree](m)</td>
+		<td>complete</td>
+		<td>agree(m)</td>
+		<td>available</td>
 		<td>delete(m)</td>
 	</tr>
 <s:iterator value="#request.goodList.result" id="good">
-	<tr>
+	<tr class="data-row">
 		<td>${good.id}</td>
 		<td><a href="<%=basepath%>/p/${good.publisherId}" target="_blank">${good.publisherId}</a></td>
 		<td><img src="<%=basepath%>/${good.pic}" title="${good.title}'s pic" alt="!!!!" /></td>
@@ -382,8 +467,10 @@ ${publisherList.naviBar}
 		<td>${good.price} RMB</td>
 		<td>${good.addTime}</td>
 		<td>${good.buyerCount}</td>
-		<td class="status"><s:if test="#good.isAgree==true"><s:if test="#good.isComplete==false">cp </s:if><s:else><s:if test="#good.isAvailable==false">av </s:if></s:else></s:if><span class="<s:if test="#good.isComplete && #good.isAgree && #good.isAvailable && !#good.isDelete">f</s:if><s:else>t</s:else>">01</span></td>
-		<td class="status"><span class="<s:if test="#good.isDelete">t</s:if><s:else>f</s:else>">01</span></td>
+		<td class="status"><span class="<s:if test="#good.isComplete">t</s:if><s:else>f</s:else>" data-coor="good,${good.id},0">01</span></td>
+		<td class="status"><span class="<s:if test="#good.isAgree">t</s:if><s:else>f</s:else>" data-coor="good,${good.id},1">01</span></td>
+		<td class="status"><span class="<s:if test="#good.isAvailable">t</s:if><s:else>f</s:else>" data-coor="good,${good.id},2">01</span></td>
+		<td class="status"><span class="<s:if test="#good.isDelete">t</s:if><s:else>f</s:else>" data-coor="good,${good.id},3">01</span></td>
 	</tr>
 </s:iterator>
 </table>

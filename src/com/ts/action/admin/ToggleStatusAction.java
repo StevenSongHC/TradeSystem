@@ -1,9 +1,12 @@
 package com.ts.action.admin;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.ts.entity.Good;
+import com.ts.entity.Message;
 import com.ts.entity.Publisher;
 import com.ts.entity.User;
 import com.ts.service.GoodService;
+import com.ts.service.MessageService;
 import com.ts.service.PublisherService;
 import com.ts.service.UserService;
 
@@ -17,16 +20,12 @@ public class ToggleStatusAction extends ActionSupport {
 	private UserService uService;
 	private PublisherService pService;
 	private GoodService gService;
+	private MessageService mService;
 	
 	private String statusCoor;		// coordinate of the column to be changed, contains entity type, id, column and status
 	private String json;
 	
 	public String execute() throws Exception {
-		System.out.println("coor: "+statusCoor);
-		final String GOOD_COLUMN[] = 		 {"isComplete",
-											  "isAgree",
-											  "isAvailable",
-											  "isDelete"};
 		
 		Publisher admin = pService.getCurrentPublisher();
 		if (admin != null && pService.isAdmin()) {
@@ -98,6 +97,55 @@ public class ToggleStatusAction extends ActionSupport {
 				else
 					json = "{isSucceed:false}";
 			}
+			// GOOD TABLE
+			else if (type.equals("good")) {
+				Good potter = gService.getGoodById(id);
+				switch (column) {
+				case 0:
+					if (uService.checkAuth(admin.getUid(), "auth_edit_good"))
+						potter.setIsComplete(status);
+					break;
+				case 1:
+					if (uService.checkAuth(admin.getUid(), "auth_edit_good"))
+						potter.setIsAgree(status);
+					break;
+				case 2:
+					if (uService.checkAuth(admin.getUid(), "auth_suspend_good"))
+						potter.setIsAvailable(status);
+					break;
+				case 3:
+					if (uService.checkAuth(admin.getUid(), "auth_delete_good"))
+						potter.setIsDelete(status);
+				default:
+					System.out.println("toggle status failed");		// log it
+			}
+				
+			// notify publisher for their good's change of status
+			// good -> pid -> Publisher -> uid -> User -> id
+			Message msg = new Message();
+			String action = "";
+			if (column == 2) {
+				action = status? "恢复上线" : "下线";
+				msg.setSenderUid(admin.getUid());
+				msg.setReceiverUid(uService.getUserById((pService.getPublisherByPid(potter.getPublisherId()).getUid())).getId());
+				msg.setWord("管理员" + action + "了您的商品 " + potter.getTitle() + ",商品号为 " + potter.getId());
+				msg.setNoticeType(3);
+			}
+			else if (column == 3) {
+				action = status? "删除" : "撤销删除";
+				msg.setSenderUid(admin.getUid());
+				msg.setReceiverUid(uService.getUserById((pService.getPublisherByPid(potter.getPublisherId()).getUid())).getId());
+				msg.setWord("管理员" + action + "了您的商品 " + potter.getTitle() + ",商品号为 " + potter.getId());
+				msg.setNoticeType(4);
+			}
+				
+			if (gService.updateGood(potter) && mService.sendMessage(msg)) {
+				json = "{isSucceed:true}";
+				
+			}
+			else
+				json = "{isSucceed:false}";
+			}
 		}
 		else
 			System.out.println("not the admin");
@@ -121,6 +169,12 @@ public class ToggleStatusAction extends ActionSupport {
 	}
 	public void setgService(GoodService gService) {
 		this.gService = gService;
+	}
+	public MessageService getmService() {
+		return mService;
+	}
+	public void setmService(MessageService mService) {
+		this.mService = mService;
 	}
 	public String getStatusCoor() {
 		return statusCoor;
