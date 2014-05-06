@@ -129,14 +129,14 @@ public class ToggleStatusAction extends ActionSupport {
 				msg.setSenderUid(admin.getUid());
 				msg.setReceiverUid(uService.getUserById((pService.getPublisherByPid(potter.getPublisherId()).getUid())).getId());
 				msg.setWord("管理员" + action + "了您的商品 " + potter.getTitle() + ",商品号为 " + potter.getId());
-				msg.setNoticeType(3);
+				msg.setNoticeType(2);
 			}
 			else if (column == 3) {
 				action = status? "删除" : "撤销删除";
 				msg.setSenderUid(admin.getUid());
 				msg.setReceiverUid(uService.getUserById((pService.getPublisherByPid(potter.getPublisherId()).getUid())).getId());
 				msg.setWord("管理员" + action + "了您的商品 " + potter.getTitle() + ",商品号为 " + potter.getId());
-				msg.setNoticeType(4);
+				msg.setNoticeType(3);
 			}
 				
 			if (gService.updateGood(potter) && mService.sendMessage(msg)) {
