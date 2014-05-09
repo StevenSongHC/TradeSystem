@@ -46,7 +46,7 @@ public class GetMessageListAction extends ActionSupport implements RequestAware 
 		// read
 		List<Map<String, Object>> readList = new ArrayList<Map<String, Object>>();
 		mService.fetchReadMessageList(uService.getCurrentUser().getId());
-		for (Message msg : mService.fetchUnreadMessageList(uService.getCurrentUser().getId())) {
+		for (Message msg : mService.fetchReadMessageList(uService.getCurrentUser().getId())) {
 			Map<String, Object> item = new HashMap<String, Object>();
 			item.put("word", msg.getWord());
 			item.put("senderName", uService.getUserById(msg.getSenderUid()).getName());
