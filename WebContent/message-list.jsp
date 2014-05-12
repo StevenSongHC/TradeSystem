@@ -21,7 +21,7 @@ a:hover {
 }
 #panel {
 	position: fixed;
-	top: 70px;
+	top: 175px;
 	left: 10px;
 	height: 50px;
 	width: 180px;
@@ -122,8 +122,8 @@ a:hover {
 	}
 </script>
 </head>
-</head>
 <body>
+<jsp:include page="header.jsp" />
 <div id="main">
 <div id="panel">
 	<div class="selected urm">显示未读的信息</div>

@@ -1,10 +1,34 @@
 @CHARSET "UTF-8";
-h1,td {
-		text-align: center;
-}
-.good-list {
-	width: 60%;
+#hot-good-list {
 	margin: auto;
-	padding: 15px;
-	border: medium solid black;
+	width: 50%;
+}
+#latest-good-list {
+	margin: auto;
+	width: 50%;
+}
+.item {
+	width: 170px;
+	height: 200px;
+	margin: 10px;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+}
+.item img {
+	width: 150px;
+	height: 150px;
+}
+.item a {
+	text-decoration: none;
+	color: rgb(45, 149, 231);
+}
+.item .title {
+	white-space: nowrap;
+	text-overflow:ellipsis;
+	text-overflow: ellipsis;
+	overflow:hidden;
+}
+.item .price {
+	color: rgb(18, 172, 43);
 }

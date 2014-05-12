@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.struts2.interceptor.RequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.ts.entity.Publisher;
 import com.ts.service.GoodService;
 import com.ts.service.PublisherService;
 import com.ts.service.UserService;
@@ -24,6 +25,10 @@ public class GetAllDataAction extends ActionSupport implements RequestAware {
 
 	@Override
 	public String execute() throws Exception {
+		Publisher p = pService.getCurrentPublisher();
+		if (p == null || p.getIsAdmin() != 2779)
+			return LOGIN;
+		
 		// 对应的每一数据库的字段和值都用数组表示，之后的impl会遍历，放回符合条件的数据
 		// FILTER columns
 		final String USER_COLUMN[] = {"isSuspend",

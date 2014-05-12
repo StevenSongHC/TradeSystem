@@ -9,12 +9,13 @@ String basepath = request.getContextPath();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/TradeSystem/css/search_result.css">
-<script type="text/javascript"	src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript"	src="<%=basepath%>/js/jquery-1.9.1.min.js"></script>
 <title>result for - ${keyword}</title>
 </head>
 <jsp:include page="user-info-box.jsp" />
 <body>
-<jsp:include page="search-box.jsp" />
+<jsp:include page="header.jsp" />
+<br><br>
 <h1>搜索  "${keyword}"  所放回的结果</h1>
 <s:iterator value="#request.resultList" id="result">
 <div class="result">

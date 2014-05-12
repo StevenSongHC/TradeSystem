@@ -7,7 +7,7 @@ String basepath = request.getContextPath();
 #my-order {
 	position: fixed;
 	left: 10px;
-	top: 100px;
+	top: 230px;
 	width: 15%;
 	background-color: rgb(252, 255, 216);
 	padding: 5px;
@@ -92,7 +92,7 @@ function loadOrderList() {
 		else {
 			data = eval("("+json+")");
 			$.each(data, function(i, item) {
-				$("#my-order").append("<div class=\"content\"><img src=\"<%=basepath%>/"+item.goodPic+"\" /><span class=\"title\"><a href=\"<%=basepath%>/g/"+item.goodId+"\">"+item.goodTitle+"</a></span><span class=\"publisher-info\"><a href=\"<%=basepath%>/p/"+item.publisherPid+"\">"+item.publisherName+"</a></span><span class=\"g-price\">"+item.goodPrice+" RMB</span><span class=\"time\">"+item.time+"</span><span class=\"oid\">OID: "+item.orderId+"</span>");
+				$("#my-order").append("<div class=\"content\"><img src=\"<%=basepath%>/"+item.goodPic+"\" target=\"_blank\" /><span class=\"title\"><a href=\"<%=basepath%>/g/"+item.goodId+"\" target=\"_blank\">"+item.goodTitle+"</a></span><span class=\"publisher-info\"><a href=\"<%=basepath%>/p/"+item.publisherPid+"\" target=\"_blank\">"+item.publisherName+"</a></span><span class=\"g-price\">"+item.goodPrice+" RMB</span><span class=\"time\">"+item.time+"</span><span class=\"oid\">OID: "+item.orderId+"</span>");
 			});
 		}
 	}).fail(function() {

@@ -17,9 +17,6 @@
             <result name="success">/user-homepage.jsp</result>
         	<result name="null">/user-not-found.jsp</result>
         </action>
-		<action name="data" class="getAllDataAction">
-            <result name="success">/all-data.jsp</result>
-        </action>
         <action name="becomePublisher" class="becomePublisherAction">
         	<result name="input">/publisher-apply-form.jsp</result>
             <result name="success">/publisher-apply-form-sent.jsp</result>
@@ -65,6 +62,7 @@
         </action>
         
         <action name="admin" class="adminAction">
+		    <result name="login">/error-404.jsp</result>
             <result name="success">/admin-page.jsp</result>
         </action>
     </package>

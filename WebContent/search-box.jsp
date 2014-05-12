@@ -8,12 +8,12 @@
 .search_box .search_input {
 	width: 75%;
 	position: absolute;
-	top: 0.6em;
+	top: 3em;
 	left: 4%;
 }
 .search_box input {
 	width: 100%;
-	padding: 0.1em;
+	padding: 5px;
 	background-color: white;
 	font-size: 18px;
 	border: 1px solid #000;

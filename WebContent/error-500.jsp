@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>404</title>
+<title>500</title>
 </head>
 <body>
-<h1>404 page not found</h1>
+<h1>oppps!!! something went wrong, see the console for more infomations</h1>
 
 <jsp:include page="footer.jsp" />
 </body>

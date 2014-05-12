@@ -14,6 +14,8 @@ String basepath = request.getContextPath();
 </head>
 <body>
 <jsp:include page="user-info-box.jsp" />
+<jsp:include page="header.jsp" />
+<br><br>
 <div class="portrait"><img src="<%=basepath%>/${user.portrait}" title="头像" /></div>
 
 <h1>${user.name}<s:if test="#session.USER_SESSION.name==#request.user.name"><span class="update-profile"><a href="updateProfile">修改资料</a></span></s:if></h1>
@@ -26,8 +28,8 @@ String basepath = request.getContextPath();
 	<s:iterator value="#request.orderList" id="item">
 	<div class="content">
 	<img src="<%=basepath%>/${item.goodPic}" title="OID: ${item.orderId}" />
-	<div class="good-title"><a href="<%=basepath%>/g/${item.goodId}">${item.goodTitle}</a></div>
-	<div class="publisher-name"><a href="<%=basepath%>/p/${item.publisherPid}">${item.publisherName}</a></div>
+	<div class="good-title"><a href="<%=basepath%>/g/${item.goodId}" target="_blank">${item.goodTitle}</a></div>
+	<div class="publisher-name"><a href="<%=basepath%>/p/${item.publisherPid}" target="_blank">${item.publisherName}</a></div>
 	<div class="good-price">${item.goodPrice} RMB</div>
 	<input type="hidden" value="${item.publisherPid}">
 	<div class="time">${item.time}</div>

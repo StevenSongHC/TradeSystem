@@ -204,8 +204,9 @@ function toggleStatus(statusCoor) {		// statusCoor = entityType + uid + dataColu
 		var data = eval("("+json+")");
 		if (!data.isSucceed)
 			alert("操作失败");
+		else
+			location.reload();
 		
-		registerInteractiveAction();
 	}).fail(function() {
 		alert("FAIL");
 	}).error(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -216,14 +217,14 @@ function toggleStatus(statusCoor) {		// statusCoor = entityType + uid + dataColu
 function registerInteractiveAction() {
 	// hover style
 	$(".t").hover(function() {
-		$(this).toggleClass("t", false).toggleClass("t-h", true).toggleClass("f", false).toggleClass("f-h", false).css("cursor", "pointer");
+		$(this).toggleClass("t", false).toggleClass("t-h", true).css("cursor", "pointer");
 	}, function() {
-		$(this).toggleClass("t", true).toggleClass("t-h", false).toggleClass("f", false);
+		$(this).toggleClass("t", true).toggleClass("t-h", false);
 	});
 	$(".f").hover(function() {
-		$(this).toggleClass("f", false).toggleClass("f-h", true).toggleClass("t", false).toggleClass("t-h", false).css("cursor", "pointer");
+		$(this).toggleClass("f", false).toggleClass("f-h", true).css("cursor", "pointer");
 	}, function() {
-		$(this).toggleClass("f", true).toggleClass("f-h", false).toggleClass("t", false);
+		$(this).toggleClass("f", true).toggleClass("f-h", false);
 	});
 	$(".page-navi>.first,.page-navi>.last").hover(function() {
 		$(this).css({"color" : "#FFF", "background-color" : "rgb(190, 240, 255)"});
@@ -283,11 +284,9 @@ function registerInteractiveAction() {
 	// status-span click action
 	$(".f").click(function() {
 		toggleStatus($(this).data("coor") + ",1");
-		$(this).toggleClass("f-h", false).toggleClass("f", false).toggleClass("t", true).css("cursor", "default");
 	});
 	$(".t").click(function() {
 		toggleStatus($(this).data("coor") + ",0");
-		$(this).toggleClass("t-h", false).toggleClass("t", false).toggleClass("f", true).css("cursor", "default");
 	});
 }
 

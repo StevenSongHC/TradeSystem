@@ -51,6 +51,7 @@ function doUpdateInfo() {
 </head>
 <jsp:include page="user-info-box.jsp" />
 <body>
+<jsp:include page="header.jsp" />
 <h1>${publisher.name} <s:if test="#session.PUBLISHER_SESSION.id==#request.publisher.id"><button id="update-info">update</button><button id="do-update-info" onclick="doUpdateInfo()">save</button></s:if></h1>
 <div style="margin: -10px 0px 20px 7px;font-size: 23px;">contact me：<span id="contact">${publisher.contact}</span><input type="text" value="${publisher.contact}" id="edit-contact"></div>
 <div id="summary">${publisher.summary}</div><textarea rows="5" cols="29" id="edit-summary">${publisher.summary}</textarea>

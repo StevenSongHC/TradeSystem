@@ -59,6 +59,7 @@ function giveOrder() {
 </script>
 </head>
 <jsp:include page="user-info-box.jsp" />
+<jsp:include page="header.jsp" />
 <body>
 ${msg}
 <h1>${good.title}</h1>
