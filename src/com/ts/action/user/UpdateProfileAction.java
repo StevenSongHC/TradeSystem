@@ -21,7 +21,7 @@ public class UpdateProfileAction extends ActionSupport implements RequestAware {
 	
 	public String execute() throws Exception {
 		User user = uService.getCurrentUser();
-		if (user == null)
+		if (user == null || user.getIsSuspend())
 			return LOGIN;
 		requestMap.put("user", user);
 		return INPUT;

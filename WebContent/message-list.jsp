@@ -6,7 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${USER_SESSION.name} 的消息列表</title>
-<link rel="stylesheet" type="text/css" href="css/list_message.css">
 <style type="text/css">
 	#main {
 	margin-left: 150px;
@@ -102,7 +101,7 @@ a:hover {
 			$("#unread-list").hide();
 		});
 	});
-	
+
 	function muteMessage(mid,noticeType) {
 		$.ajax( {
 			type: "POST",

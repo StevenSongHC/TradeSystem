@@ -3,7 +3,7 @@
   <display-name>LG</display-name>
   
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>forward-index.jsp</welcome-file>
   </welcome-file-list>
  
   <!-- log4j -->

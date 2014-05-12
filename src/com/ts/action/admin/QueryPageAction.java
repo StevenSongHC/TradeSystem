@@ -36,12 +36,12 @@ public class QueryPageAction extends ActionSupport {
 		if (currentPage == 0)
 			currentPage = 1;
 		System.out.println(naviType+"_"+pageSize+"_"+currentPage+"_"+filterArray+"_"+sortArray);
-		final String USER_COLUMN[] = 		{"isSuspend",
-									  		 "isDelete",
-									  		 "isRestricted",
+		final String USER_COLUMN[] = 		{"isSuspend",		// if yes, can't {BecomePublisher, BuyGood, UpdateProfie}
+									  		 "isDelete",		// if yes, can't {login}
+									  		 "isRestricted",	// if yes, can't {BecomePublisher, BuyGood}
 									  		 "isPublisher"};
-		final String PUBLISHER_COLUMN[] = 	{"isActivate",
-										   	 "isRestricted"};
+		final String PUBLISHER_COLUMN[] = 	{"isActivate",		// if no, can't {AddGood, EditGood, PublishGood}
+										   	 "isRestricted"};	// if yes, cant't {PublisherGood}
 		final String GOOD_COLUMN[] = 		{"isComplete",
 				 					  		 "isAgree",
 				 					  		 "isAvailable",

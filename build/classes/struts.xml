@@ -6,6 +6,9 @@
     <!-- maxsize = 10 MB -->
     <constant name="struts.multipart.maxSize" value="10485760" />
 	<package name="struts2" extends="struts-default">
+	    <action name="index" class="indexAction">
+            <result name="success">index.jsp</result>
+        </action>
 		<action name="register" class="registerAction">
 			<result name="input">/register.jsp</result>
             <result name="success" type="redirect">homepage</result>
@@ -46,7 +49,7 @@
         <action name="editGood" class="editGoodAction">
         	<result name="success">/edit-good.jsp</result>
             <result name="view">/view-good.jsp</result>
-        	<result name="none">/error-404.jsp</result>
+        	<result name="redirect">/good-redirect-page.jsp</result>
         </action>
         <action name="publishGood" class="publishGoodAction">
         	<result name="success" type="redirect">homepage</result>

@@ -24,7 +24,7 @@ public class AddGoodAction extends ActionSupport {
 	public String execute() throws Exception {
 		Publisher publisher = pService.getCurrentPublisher();
 		// not a publisher, get restricted or no activated
-		if (publisher == null || publisher.getIsRestricted() || !publisher.getIsActivate())
+		if (publisher == null || !publisher.getIsActivate())
 			return "restricted";
 		// init
 		if (pic == null)

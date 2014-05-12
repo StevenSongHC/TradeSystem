@@ -6,13 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>校园小商品交易系统</title>
+<link rel="stylesheet" type="text/css" href="css/index.css">
 <script type="text/javascript"	src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+	});
+</script>
 </head>
 
 <jsp:include page="user-info-box.jsp" />
 
 <body>
-校园小商品交易系统<a href="data">data</a>
 
 <jsp:include page="search-box.jsp" />
 

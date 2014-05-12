@@ -28,7 +28,7 @@ public class BecomePublisherAction extends ActionSupport {
 			return LOGIN;
 		
 		// check it now
-		if (user.getIsRestricted())
+		if (user.getIsRestricted() || user.getIsSuspend())
 			return "restricted";
 		if (mService.haveSentUnreadBecomePublisherApply(user.getId())) {
 			System.out.println(user.getName() + " already sent a become-publisher apply");

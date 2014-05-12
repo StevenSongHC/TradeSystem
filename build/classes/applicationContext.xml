@@ -183,6 +183,9 @@
     </bean>
     
     <!-- Action -->
+    <bean id="indexAction" scope="prototype" class="com.ts.action.user.IndexAction">
+        <property name="gService" ref="goodService"/>
+    </bean>
     <bean id="registerAction" scope="prototype" class="com.ts.action.user.RegisterAction">
         <property name="uService" ref="userService"/>
     </bean>
@@ -231,6 +234,7 @@
     	<property name="gService" ref="goodService"/>
     </bean>
     <bean id="editGoodAction" scope="prototype" class="com.ts.action.publisher.EditGoodAction">
+        <property name="uService" ref="userService"/>
     	<property name="pService" ref="publisherService"/>
     	<property name="gService" ref="goodService"/>
     </bean>

@@ -31,6 +31,9 @@ function giveOrder() {
 	}).done(function( json ) {
 		data = eval("("+json+")");
 		switch ( data.status ) {
+		case -3:
+			alert("Got No Authority");
+			break;
 		case -2:
 			alert("Wrong Item");
 			break;
@@ -57,6 +60,7 @@ function giveOrder() {
 </head>
 <jsp:include page="user-info-box.jsp" />
 <body>
+${msg}
 <h1>${good.title}</h1>
 <span id="buyer-amount">${good.buyerCount}</span>
 <s:if test="#request.canBuy=='true'">

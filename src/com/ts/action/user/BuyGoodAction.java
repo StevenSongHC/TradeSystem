@@ -36,6 +36,8 @@ public class BuyGoodAction extends ActionSupport {
 			json = "{'status' : 0}";		// need to login
 		else if (good == null)
 			json = "{'status' : -2}";		// wrong item
+		else if (!uService.checkAuth(user.getId(), "auth_give_order"))
+			json = "{'status' : -3}";		// got no auth
 		else {
 			// save order
 			Publisher publisher = pService.getPublisherByPid(good.getPublisherId());

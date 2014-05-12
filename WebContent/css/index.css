@@ -2,3 +2,9 @@
 h1,td {
 		text-align: center;
 }
+.good-list {
+	width: 60%;
+	margin: auto;
+	padding: 15px;
+	border: medium solid black;
+}

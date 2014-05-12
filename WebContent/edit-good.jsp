@@ -76,6 +76,7 @@ function publishGood() {
 <body>
 <jsp:include page="user-info-box.jsp" />
 
+${msg}
 <div id="main">
 	<input type="hidden" id="gid" value="${good.id}" />
 	<p>商品名称*<input type="text" name="title" id="title" value="${good.title}"/></p>

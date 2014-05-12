@@ -38,7 +38,7 @@ public class LoginAction extends ActionSupport implements ServletResponseAware, 
 	public String execute() throws Exception {
 		try {
 			User user = uService.getUserByAccount(account);
-			if (user == null) {									// Invalid account
+			if (user == null || user.getIsDelete()) {									// Invalid account
 				status = -2;
 				msg = "无此用户,请检查,或注册学号";
 			}
