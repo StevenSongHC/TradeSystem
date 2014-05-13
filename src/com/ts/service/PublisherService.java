@@ -31,6 +31,8 @@ public interface PublisherService {
 	
 	public Publisher getPublisherByPid(int pid);
 	
+	public Publisher getPublisherByContact(String contact);
+	
 	public int getAdminUid();
 	
 	public boolean isAdmin();
@@ -40,5 +42,5 @@ public interface PublisherService {
 	public boolean publishGood(int pid);	// validate auths and account status requires
 	
 	public PageBean getPublisherPageList(final int pageSize, final int currentPage, final String conditions[][], final String sort[]);
-	
+
 }

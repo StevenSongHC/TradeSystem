@@ -46,6 +46,10 @@ public class PublisherServiceImpl implements PublisherService {
 		return publisherDao.getPublisherByPid(pid);
 	}
 	
+	public Publisher getPublisherByContact(String contact) {
+		return publisherDao.getPublisherByContact(contact);
+	}
+	
 	public int getAdminUid() {
 		return publisherDao.getAdmin().getUid();
 	}

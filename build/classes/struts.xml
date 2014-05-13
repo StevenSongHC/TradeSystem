@@ -142,5 +142,10 @@
                 <param name="root">json</param>
             </result>
         </action>
+        <action name="sendMessage" class="sendMessageAction">
+            <result name="map" type="json">
+                <param name="root">json</param>
+            </result>
+        </action>
 	</package>
 </struts>

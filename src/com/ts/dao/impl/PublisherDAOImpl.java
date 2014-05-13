@@ -127,7 +127,14 @@ public class PublisherDAOImpl implements PublisherDAO {
 	public Publisher getPublisherByPid(int pid) {
 		Session session = sessionFactory.openSession();
 		Query query = null;
-		query = session.createQuery("from Publisher p where p.id=" + pid);
+		query = session.createQuery("from Publisher p where p.id=?").setInteger(0, pid);
+		return (Publisher) query.uniqueResult();
+	}
+	
+	public Publisher getPublisherByContact(String contact) {
+		Session session = sessionFactory.openSession();
+		Query query = null;
+		query = session.createQuery("from Publisher p where p.contact=?").setString(0, contact);
 		return (Publisher) query.uniqueResult();
 	}
 

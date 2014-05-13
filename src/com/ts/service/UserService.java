@@ -19,6 +19,8 @@ public interface UserService {
 	 */
 	public User getUserByAccount(String account);
 	
+	public User getUserByName(String name);
+	
 	/**
 	 * @param
 	 * @return CODE
@@ -40,5 +42,6 @@ public interface UserService {
 	public boolean checkAuth(int uid, String auth);
 	
 	public boolean modifyAuth(int uid, String auth, int val);
+
 
 }

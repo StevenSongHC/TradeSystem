@@ -85,6 +85,14 @@ public class UserDAOImpl implements UserDAO {
 		return (User) query.uniqueResult();
 	}
 	
+	public User getUserByName(String name) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from User user where user.name=?").setString(0, name);
+		session.getTransaction().commit();
+		return (User) query.uniqueResult();
+	}
+	
 	public boolean updateUser(User user) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();

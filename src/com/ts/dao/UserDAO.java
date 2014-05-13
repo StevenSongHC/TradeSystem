@@ -12,6 +12,8 @@ public interface UserDAO {
 	
 	public User getUserByAccount(String account);
 	
+	public User getUserByName(String name);
+	
 	public boolean updateUser(User user);
 	
 	public int getAllRow(String condition);

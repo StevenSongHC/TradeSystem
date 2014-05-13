@@ -23,19 +23,14 @@ a:hover {
 	position: fixed;
 	top: 175px;
 	left: 10px;
-	height: 50px;
+	height: 80px;
 	width: 180px;
 	background-color: rgb(255, 221, 148);
 	padding: 10px;
 }
 #panel div {
 	cursor: pointer;
-}
-#panel .urm {
 	margin: 0 0 10px 0;
-}
-#panel .rm {
-	margin: 10px 0 0 0;
 }
 #panel .hover {
 	background-color: yellow;
@@ -53,6 +48,23 @@ a:hover {
 	padding: 5px;
 	border: 3.5px solid grey;
 	display: none;
+}
+#write-message {
+	width: 30%;
+	margin: 30px 0 0 90px;
+	display: none;
+}
+#message-content {
+	width: 100%;
+	height: 60px;
+	background-color: rgb(251, 255, 236);
+	overflow-y: auto;
+}
+.tip {
+	margin: 0 5px 0 10px;
+}
+.error-message {
+	color: red;
 }
 .new-message {
 	margin-top: 10px;
@@ -91,14 +103,50 @@ a:hover {
 		$("#panel>.urm").click(function() {
 			$(this).toggleClass("selected", true);
 			$("#panel>.rm").toggleClass("selected", false);
+			$("#panel>.write-messag").toggleClass("selected", false);
 			$("#unread-list").show();
 			$("#read-list").hide();
+			$("#write-message").hide();
 		});
 		$("#panel>.rm").click(function() {
 			$(this).toggleClass("selected", true);
 			$("#panel>.urm").toggleClass("selected", false);
+			$("#panel>.write-messag").toggleClass("selected", false);
 			$("#read-list").show();
 			$("#unread-list").hide();
+			$("#write-message").hide();
+		});
+		$("#panel>.write-message").click(function() {
+			$(this).toggleClass("selected", true);
+			$("#panel>.rm").toggleClass("selected", false);
+			$("#panel>.urm").toggleClass("selected", false);
+			$("#read-list").hide();
+			$("#unread-list").hide();
+			$("#write-message").show();
+		});
+		
+		$("#receiver-type").change(function() {
+			var rt = $(this).val();
+			switch ($(this).val()) {
+				case 'user' :
+					$(".tip").show();
+					$("#receiver-code").show();
+					$(".tip").html("请输入用户名称");
+					break;
+				case 'publisher' :
+					$(".tip").show();
+					$("#receiver-code").show();
+					$(".tip").html("请输入商家的联系方式");
+					break;
+				case 'admin' :
+					$(".tip").hide();
+					$("#receiver-code").hide();
+					break;
+				default:
+					$(".tip").show();
+					$(".tip").html("切换出错，请重新操作!");
+					$("#receiver-code").hide();
+			}
 		});
 	});
 
@@ -120,6 +168,28 @@ a:hover {
 			$("#ajax").html(XMLHttpRequest.responseText);
 		});
 	}
+	
+	function sendMessage() {
+		$.ajax( {
+			type: "POST",
+			url: "sendMessage",
+			data: { receiverType : $("#receiver-type").children("option:selected").val(), receiverCode : $("#receiver-code").val(), content : $("#message-content").html()  },
+			dataType: "json"
+		}).done(function( json ) {
+			var data = eval("("+json+")");
+			if (data.flag) {
+				$(".error-message").html("");
+				$("#message-content").html("");
+				alert("发送成功");
+			}
+			else
+				$(".error-message").html(data.msg);
+		}).fail(function() {
+			alert("FAIL");
+		}).error(function (XMLHttpRequest, textStatus, errorThrown) {
+			$("#ajax").html(XMLHttpRequest.responseText);
+		});
+	}
 </script>
 </head>
 <body>
@@ -128,6 +198,7 @@ a:hover {
 <div id="panel">
 	<div class="selected urm">显示未读的信息</div>
 	<div class="rm">显示已读的信息</div>
+	<div class="write-message">写信</div>
 </div>
 <div id="unread-list">未读的消息
 	<s:iterator value="#request.unreadList" id="msg">
@@ -166,6 +237,16 @@ a:hover {
 			<div class="good-deleted">${senderName} ${word} -- ${time}</div>
 		</s:if>
 	</s:iterator>
+</div>
+<div id="write-message">发送消息给 
+	<select id="receiver-type">
+		<option value="user" selected="selected">用户</option>
+		<option value="publisher">商家</option>
+		<option value="admin">管理员</option>
+	</select>
+	<span class="tip">请输入用户名称</span><input type="text" id="receiver-code" /><span class="error-message"></span>
+	<div contentEditable="true" id="message-content"></div>
+	<button onclick="sendMessage()">send</button>
 </div>
 </div>
 

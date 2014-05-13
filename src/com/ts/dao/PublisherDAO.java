@@ -19,6 +19,8 @@ public interface PublisherDAO {
 	public Publisher getPublisherByUid(int uid);
 	
 	public Publisher getPublisherByPid(int pid);
+
+	public Publisher getPublisherByContact(String contact);
 	
 	public boolean updatePublisher(Publisher publisher);
 	

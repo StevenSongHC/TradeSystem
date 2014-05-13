@@ -295,6 +295,11 @@
     <bean id="searchAction" scope="prototype" class="com.ts.action.user.SearchAction">
     	<property name="gService" ref="goodService"/>
     </bean>
+    <bean id="sendMessageAction" scope="prototype" class="com.ts.action.user.SendMessageAction">
+        <property name="uService" ref="userService"/>
+    	<property name="pService" ref="publisherService"/>
+    	<property name="mService" ref="messageService"/>
+    </bean>
     <bean id="adminAction" scope="prototype" class="com.ts.action.admin.GetAllDataAction">
         <property name="uService" ref="userService"/>
         <property name="pService" ref="publisherService"/>

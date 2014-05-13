@@ -30,6 +30,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserByAccount(account);
 	}
 	
+	public User getUserByName(String name) {
+		return userDao.getUserByName(name);
+	}
+	
 	public int login(String account, String password) {
 		try {
 			User user = userDao.getUserByAccount(account);
