@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.ts.entity.User;
 import com.ts.service.UserService;
 import com.ts.util.CookieUtil;
+import com.ts.util.MD5Util;
 
 public class RegisterAction extends ActionSupport implements ServletResponseAware, SessionAware {
 
@@ -30,7 +31,8 @@ public class RegisterAction extends ActionSupport implements ServletResponseAwar
 		User user = new User();
 		user.setName(name);
 		user.setAccount(account);
-		user.setPassword(password);
+		user.setPassword(MD5Util.encryptCode(password));
+		user.setPortrait("images/portrait/default.png");
 		int code = uService.addUser(user);
 		System.out.println("save code: " + code);
 		switch (code) {

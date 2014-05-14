@@ -76,8 +76,8 @@ ${user.name}
 <div>简介
 <textarea id="summary">${user.summary}</textarea>
 </div>
-<div>密码
-<input type="password" id="password" value="${user.password}">
+<div>重置密码
+<input type="password" id="password">
 </div>
 <button onclick="updateProfile()">save</button>
 <span id="status"></span>

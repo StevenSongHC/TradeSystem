@@ -13,6 +13,7 @@ import com.ts.entity.User;
 import com.ts.service.PublisherService;
 import com.ts.service.UserService;
 import com.ts.util.CookieUtil;
+import com.ts.util.MD5Util;
 
 public class LoginAction extends ActionSupport implements ServletResponseAware, SessionAware {
 
@@ -42,11 +43,12 @@ public class LoginAction extends ActionSupport implements ServletResponseAware, 
 				status = -2;
 				msg = "无此用户,请检查,或注册学号";
 			}
-			else if (!password.equals(user.getPassword())) {	// Wrong password
+			else if (!MD5Util.authenticateCode(user.getPassword(), password)) {	// Wrong password
 				status = -1;
 				msg = account;
 			}
 			else {												// Login succeed
+				System.out.println("加密密码: " + MD5Util.encryptCode(user.getPassword()));
 				// add user cookie
 				response.addCookie(CookieUtil.generateUserCookie(user));
 				// add use session

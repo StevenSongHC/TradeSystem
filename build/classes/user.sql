@@ -2,7 +2,7 @@ create table user(
 	uid int(4) auto_increment primary key not null,
 	u_name varchar(30) not null,
 	u_account varchar(30) not null,
-	u_password varchar(30) not null,
+	u_password varchar(35) not null,
 	u_portrait varchar(50) default 'images/portrait/default.png',
 	u_summary text,
 	u_isSuspend int(1) default 0,

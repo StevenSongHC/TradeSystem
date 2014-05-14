@@ -7,6 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ts.entity.User;
 import com.ts.service.UserService;
+import com.ts.util.MD5Util;
 
 public class DoUpdateProfileAction extends ActionSupport {
 
@@ -27,7 +28,9 @@ public class DoUpdateProfileAction extends ActionSupport {
 		
 		if (user != null) {
 			user.setSummary(summary);
-			user.setPassword(password);
+			// update password
+			if (!password.equals(""))
+				user.setPassword(MD5Util.encryptCode(password));
 			
 			// delete the original portrait
 			if (!portrait.equals(user.getPortrait())) {
